@@ -1,0 +1,195 @@
+phase=baseline tag=baseline_s1 device=cpu classes=30
+params=462,398  train=840 val=180 test=180
+class counts balanced -> unweighted CrossEntropyLoss
+
+--- stage 'scratch': 45 epochs, lr=1.0e-03, trainable params=462,398
+e001 [scratch        ] train 3.177/  8.7%  val 2.854/top1  14.4%/top5  57.2%  103s  <- best
+e002 [scratch        ] train 2.680/ 17.3%  val 2.485/top1  20.6%/top5  52.8%  111s  <- best
+e003 [scratch        ] train 2.368/ 21.4%  val 2.058/top1  29.4%/top5  66.1%  105s  <- best
+e004 [scratch        ] train 2.281/ 24.0%  val 2.137/top1  28.3%/top5  61.1%  145s
+e005 [scratch        ] train 2.214/ 23.6%  val 1.792/top1  42.8%/top5  73.9%  127s  <- best
+e006 [scratch        ] train 2.110/ 27.1%  val 1.814/top1  42.8%/top5  71.1%  127s
+e007 [scratch        ] train 2.056/ 30.0%  val 1.794/top1  40.6%/top5  70.0%  128s
+e008 [scratch        ] train 2.003/ 29.8%  val 1.668/top1  49.4%/top5  74.4%  144s  <- best
+e009 [scratch        ] train 1.936/ 31.9%  val 1.626/top1  44.4%/top5  76.1%  129s
+e010 [scratch        ] train 1.932/ 32.7%  val 1.726/top1  42.2%/top5  69.4%  122s
+e011 [scratch        ] train 1.941/ 33.3%  val 1.588/top1  43.9%/top5  80.6%  94s
+e012 [scratch        ] train 1.931/ 32.7%  val 1.951/top1  35.0%/top5  67.2%  90s
+e013 [scratch        ] train 1.890/ 33.9%  val 1.644/top1  43.9%/top5  75.0%  90s
+e014 [scratch        ] train 1.826/ 38.2%  val 1.740/top1  45.6%/top5  73.3%  102s
+e015 [scratch        ] train 1.914/ 34.8%  val 1.556/top1  46.1%/top5  81.1%  88s
+e016 [scratch        ] train 1.788/ 39.3%  val 1.654/top1  45.0%/top5  71.7%  91s
+e017 [scratch        ] train 1.787/ 39.3%  val 1.534/top1  47.8%/top5  75.6%  93s
+e018 [scratch        ] train 1.774/ 36.3%  val 1.644/top1  46.7%/top5  71.1%  116s
+e019 [scratch        ] train 1.741/ 40.0%  val 1.527/top1  46.1%/top5  77.8%  124s
+e020 [scratch        ] train 1.789/ 39.3%  val 1.469/top1  48.3%/top5  87.2%  135s
+e021 [scratch        ] train 1.747/ 41.4%  val 1.499/top1  53.3%/top5  82.8%  126s  <- best
+e022 [scratch        ] train 1.723/ 40.6%  val 1.465/top1  47.2%/top5  87.2%  129s
+e023 [scratch        ] train 1.711/ 40.6%  val 1.468/top1  51.7%/top5  81.1%  128s
+e024 [scratch        ] train 1.683/ 41.0%  val 1.421/top1  50.6%/top5  87.8%  129s
+e025 [scratch        ] train 1.717/ 40.6%  val 1.436/top1  50.6%/top5  78.9%  125s
+e026 [scratch        ] train 1.682/ 41.7%  val 1.512/top1  44.4%/top5  78.3%  125s
+e027 [scratch        ] train 1.675/ 40.4%  val 1.410/top1  57.8%/top5  85.0%  128s  <- best
+e028 [scratch        ] train 1.655/ 42.3%  val 1.433/top1  47.8%/top5  78.3%  110s
+e029 [scratch        ] train 1.663/ 43.2%  val 1.369/top1  57.8%/top5  90.6%  86s
+e030 [scratch        ] train 1.665/ 39.8%  val 1.567/top1  51.7%/top5  83.3%  77s
+e031 [scratch        ] train 1.670/ 40.8%  val 1.404/top1  51.1%/top5  82.8%  70s
+e032 [scratch        ] train 1.619/ 43.1%  val 1.377/top1  57.2%/top5  85.6%  70s
+e033 [scratch        ] train 1.594/ 45.4%  val 1.382/top1  56.7%/top5  84.4%  81s
+e034 [scratch        ] train 1.617/ 42.9%  val 1.406/top1  52.2%/top5  85.0%  79s
+e035 [scratch        ] train 1.671/ 40.2%  val 1.515/top1  50.0%/top5  76.7%  90s
+e036 [scratch        ] train 1.585/ 43.7%  val 1.371/top1  55.6%/top5  87.8%  72s
+e037 [scratch        ] train 1.575/ 45.1%  val 1.358/top1  55.0%/top5  85.6%  78s
+e038 [scratch        ] train 1.575/ 43.8%  val 1.346/top1  53.9%/top5  85.6%  75s
+e039 [scratch        ] train 1.554/ 46.3%  val 1.401/top1  57.2%/top5  83.9%  81s
+e040 [scratch        ] train 1.558/ 46.7%  val 1.354/top1  57.2%/top5  85.6%  75s
+e041 [scratch        ] train 1.612/ 44.9%  val 1.367/top1  56.7%/top5  86.7%  89s
+e042 [scratch        ] train 1.550/ 45.8%  val 1.408/top1  51.1%/top5  83.9%  79s
+e043 [scratch        ] train 1.570/ 44.9%  val 1.342/top1  57.2%/top5  86.7%  72s
+e044 [scratch        ] train 1.609/ 44.4%  val 1.375/top1  55.0%/top5  85.0%  77s
+e045 [scratch        ] train 1.586/ 44.9%  val 1.353/top1  55.0%/top5  85.0%  77s
+
+best val top-1 57.8% (top-5 85.0%) at epoch 27  |  76.6 min total
+checkpoint -> C:\Users\ChristopherAngoe\personal projects\ML\pharm-ml-portfolio\pill-identifier\outputs\checkpoints\baseline_s1_best.pt
+history   -> C:\Users\ChristopherAngoe\personal projects\ML\pharm-ml-portfolio\pill-identifier\outputs\history_baseline_s1.csv
+done baseline seed 1
+phase=transfer tag=transfer_s1 device=cpu classes=30
+params=11,191,902  train=840 val=180 test=180
+class counts balanced -> unweighted CrossEntropyLoss
+
+--- stage 'head-only': 10 epochs, lr=1.0e-03, trainable params=15,390
+e001 [head-only      ] train 3.287/ 10.1%  val 2.890/top1  20.0%/top5  61.1%  58s  <- best
+e002 [head-only      ] train 2.512/ 32.5%  val 2.544/top1  32.8%/top5  73.9%  62s  <- best
+e003 [head-only      ] train 2.036/ 46.5%  val 2.346/top1  39.4%/top5  75.0%  58s  <- best
+e004 [head-only      ] train 1.778/ 53.0%  val 2.188/top1  44.4%/top5  80.6%  57s  <- best
+e005 [head-only      ] train 1.563/ 61.0%  val 2.129/top1  42.8%/top5  80.0%  64s
+e006 [head-only      ] train 1.498/ 60.7%  val 2.078/top1  42.8%/top5  80.6%  61s
+e007 [head-only      ] train 1.382/ 66.4%  val 2.051/top1  43.3%/top5  80.6%  57s
+e008 [head-only      ] train 1.354/ 65.5%  val 2.030/top1  42.2%/top5  80.6%  58s
+e009 [head-only      ] train 1.354/ 67.5%  val 2.016/top1  44.4%/top5  81.1%  61s
+e010 [head-only      ] train 1.300/ 70.0%  val 2.016/top1  43.3%/top5  80.6%  66s
+
+--- stage 'finetune-last2': 20 epochs, lr=1.0e-04, trainable params=10,508,830
+e011 [finetune-last2 ] train 0.943/ 76.0%  val 1.253/top1  66.7%/top5  90.6%  86s  <- best
+e012 [finetune-last2 ] train 0.536/ 84.9%  val 1.075/top1  67.2%/top5  93.9%  91s  <- best
+e013 [finetune-last2 ] train 0.350/ 92.5%  val 0.960/top1  68.9%/top5  96.7%  93s  <- best
+e014 [finetune-last2 ] train 0.289/ 92.4%  val 0.957/top1  71.7%/top5  92.8%  88s  <- best
+e015 [finetune-last2 ] train 0.244/ 92.7%  val 0.780/top1  75.6%/top5  98.9%  90s  <- best
+e016 [finetune-last2 ] train 0.208/ 94.4%  val 0.727/top1  76.7%/top5  99.4%  84s  <- best
+e017 [finetune-last2 ] train 0.167/ 95.8%  val 0.681/top1  81.1%/top5  98.9%  91s  <- best
+e018 [finetune-last2 ] train 0.172/ 95.1%  val 0.600/top1  82.8%/top5  99.4%  85s  <- best
+e019 [finetune-last2 ] train 0.155/ 95.5%  val 0.669/top1  78.9%/top5  98.9%  93s
+e020 [finetune-last2 ] train 0.139/ 96.3%  val 0.637/top1  81.1%/top5  98.9%  102s
+e021 [finetune-last2 ] train 0.139/ 95.8%  val 0.578/top1  81.7%/top5  99.4%  90s
+e022 [finetune-last2 ] train 0.120/ 96.3%  val 0.596/top1  81.7%/top5  99.4%  89s
+e023 [finetune-last2 ] train 0.112/ 96.9%  val 0.618/top1  81.1%/top5  99.4%  90s
+e024 [finetune-last2 ] train 0.117/ 97.3%  val 0.613/top1  82.2%/top5  98.3%  95s
+e025 [finetune-last2 ] train 0.088/ 98.2%  val 0.612/top1  81.1%/top5  98.9%  85s
+e026 [finetune-last2 ] train 0.107/ 97.4%  val 0.645/top1  81.1%/top5  98.9%  101s
+e027 [finetune-last2 ] train 0.093/ 97.7%  val 0.633/top1  81.7%/top5  99.4%  79s
+e028 [finetune-last2 ] train 0.085/ 98.1%  val 0.604/top1  81.7%/top5  99.4%  80s
+e029 [finetune-last2 ] train 0.094/ 97.7%  val 0.644/top1  80.6%/top5  98.9%  90s
+e030 [finetune-last2 ] train 0.092/ 98.2%  val 0.624/top1  81.7%/top5  99.4%  99s
+
+best val top-1 82.8% (top-5 99.4%) at epoch 18  |  40.1 min total
+checkpoint -> C:\Users\ChristopherAngoe\personal projects\ML\pharm-ml-portfolio\pill-identifier\outputs\checkpoints\transfer_s1_best.pt
+history   -> C:\Users\ChristopherAngoe\personal projects\ML\pharm-ml-portfolio\pill-identifier\outputs\history_transfer_s1.csv
+done transfer seed 1
+phase=baseline tag=baseline_s2 device=cpu classes=30
+params=462,398  train=840 val=180 test=180
+class counts balanced -> unweighted CrossEntropyLoss
+
+--- stage 'scratch': 45 epochs, lr=1.0e-03, trainable params=462,398
+e001 [scratch        ] train 3.158/ 10.2%  val 2.920/top1  21.1%/top5  51.7%  86s  <- best
+e002 [scratch        ] train 2.719/ 20.8%  val 2.235/top1  34.4%/top5  68.3%  75s  <- best
+e003 [scratch        ] train 2.372/ 24.9%  val 2.020/top1  36.1%/top5  68.9%  82s  <- best
+e004 [scratch        ] train 2.208/ 26.2%  val 1.906/top1  38.9%/top5  73.3%  79s  <- best
+e005 [scratch        ] train 2.090/ 30.1%  val 1.843/top1  37.8%/top5  68.9%  71s
+e006 [scratch        ] train 2.121/ 27.3%  val 1.765/top1  41.7%/top5  73.9%  75s  <- best
+e007 [scratch        ] train 1.998/ 32.6%  val 1.948/top1  33.3%/top5  68.9%  76s
+e008 [scratch        ] train 1.955/ 34.6%  val 1.749/top1  43.9%/top5  67.8%  77s  <- best
+e009 [scratch        ] train 1.935/ 33.9%  val 1.748/top1  43.9%/top5  68.9%  74s
+e010 [scratch        ] train 1.939/ 32.1%  val 1.680/top1  44.4%/top5  79.4%  75s  <- best
+e011 [scratch        ] train 1.888/ 33.0%  val 1.715/top1  41.7%/top5  70.0%  76s
+e012 [scratch        ] train 1.909/ 33.3%  val 1.640/top1  41.1%/top5  81.7%  80s
+e013 [scratch        ] train 1.912/ 34.5%  val 1.577/top1  47.2%/top5  84.4%  78s  <- best
+e014 [scratch        ] train 1.841/ 36.8%  val 1.596/top1  44.4%/top5  80.6%  77s
+e015 [scratch        ] train 1.823/ 36.8%  val 1.495/top1  50.0%/top5  82.8%  93s  <- best
+e016 [scratch        ] train 1.804/ 37.4%  val 1.712/top1  47.8%/top5  73.3%  77s
+e017 [scratch        ] train 1.769/ 37.4%  val 1.620/top1  46.1%/top5  72.2%  74s
+e018 [scratch        ] train 1.763/ 38.1%  val 1.522/top1  48.3%/top5  80.0%  74s
+e019 [scratch        ] train 1.794/ 38.1%  val 1.548/top1  44.4%/top5  80.6%  75s
+e020 [scratch        ] train 1.727/ 41.3%  val 1.439/top1  50.0%/top5  86.7%  77s
+e021 [scratch        ] train 1.660/ 42.6%  val 1.457/top1  50.6%/top5  86.1%  2452s  <- best
+e022 [scratch        ] train 1.683/ 41.2%  val 1.452/top1  53.3%/top5  81.1%  71s  <- best
+e023 [scratch        ] train 1.651/ 43.6%  val 1.562/top1  46.7%/top5  73.3%  65s
+e024 [scratch        ] train 1.635/ 41.5%  val 1.453/top1  48.9%/top5  86.7%  66s
+e025 [scratch        ] train 1.687/ 41.3%  val 1.616/top1  45.0%/top5  75.0%  69s
+e026 [scratch        ] train 1.700/ 39.6%  val 1.431/top1  53.9%/top5  82.8%  65s  <- best
+e027 [scratch        ] train 1.678/ 41.5%  val 1.429/top1  53.3%/top5  83.9%  74s
+e028 [scratch        ] train 1.656/ 41.7%  val 1.373/top1  56.7%/top5  86.7%  74s  <- best
+e029 [scratch        ] train 1.662/ 44.3%  val 1.405/top1  52.2%/top5  83.9%  71s
+e030 [scratch        ] train 1.672/ 42.1%  val 1.455/top1  51.7%/top5  80.0%  103s
+e031 [scratch        ] train 1.616/ 44.0%  val 1.446/top1  48.9%/top5  81.7%  117s
+e032 [scratch        ] train 1.617/ 43.2%  val 1.371/top1  55.0%/top5  86.7%  120s
+e033 [scratch        ] train 1.625/ 42.3%  val 1.408/top1  50.0%/top5  83.3%  118s
+e034 [scratch        ] train 1.628/ 44.2%  val 1.421/top1  52.2%/top5  83.9%  132s
+e035 [scratch        ] train 1.615/ 43.0%  val 1.539/top1  47.2%/top5  76.7%  145s
+e036 [scratch        ] train 1.584/ 43.9%  val 1.359/top1  53.3%/top5  85.6%  193s
+e037 [scratch        ] train 1.583/ 44.9%  val 1.360/top1  56.1%/top5  86.7%  131s
+e038 [scratch        ] train 1.601/ 44.4%  val 1.419/top1  52.8%/top5  80.6%  129s
+e039 [scratch        ] train 1.554/ 46.0%  val 1.367/top1  56.1%/top5  85.6%  116s
+e040 [scratch        ] train 1.564/ 45.1%  val 1.395/top1  56.7%/top5  85.6%  121s
+e041 [scratch        ] train 1.565/ 45.4%  val 1.376/top1  56.7%/top5  86.1%  129s
+e042 [scratch        ] train 1.536/ 47.6%  val 1.359/top1  57.2%/top5  85.6%  127s  <- best
+e043 [scratch        ] train 1.593/ 42.0%  val 1.369/top1  56.1%/top5  85.6%  133s
+e044 [scratch        ] train 1.588/ 45.4%  val 1.386/top1  57.2%/top5  86.7%  123s
+e045 [scratch        ] train 1.571/ 46.0%  val 1.393/top1  55.6%/top5  86.1%  116s
+
+best val top-1 57.2% (top-5 85.6%) at epoch 42  |  110.2 min total
+checkpoint -> C:\Users\ChristopherAngoe\personal projects\ML\pharm-ml-portfolio\pill-identifier\outputs\checkpoints\baseline_s2_best.pt
+history   -> C:\Users\ChristopherAngoe\personal projects\ML\pharm-ml-portfolio\pill-identifier\outputs\history_baseline_s2.csv
+done baseline seed 2
+phase=transfer tag=transfer_s2 device=cpu classes=30
+params=11,191,902  train=840 val=180 test=180
+class counts balanced -> unweighted CrossEntropyLoss
+
+--- stage 'head-only': 10 epochs, lr=1.0e-03, trainable params=15,390
+e001 [head-only      ] train 3.308/ 10.7%  val 3.004/top1  12.8%/top5  51.7%  94s  <- best
+e002 [head-only      ] train 2.548/ 30.7%  val 2.586/top1  30.0%/top5  66.1%  94s  <- best
+e003 [head-only      ] train 2.085/ 44.5%  val 2.408/top1  32.8%/top5  68.9%  100s  <- best
+e004 [head-only      ] train 1.798/ 52.4%  val 2.280/top1  37.2%/top5  78.3%  94s  <- best
+e005 [head-only      ] train 1.629/ 58.2%  val 2.199/top1  40.0%/top5  77.2%  94s  <- best
+e006 [head-only      ] train 1.495/ 63.8%  val 2.135/top1  41.7%/top5  78.9%  95s  <- best
+e007 [head-only      ] train 1.420/ 65.8%  val 2.104/top1  43.3%/top5  80.0%  99s  <- best
+e008 [head-only      ] train 1.408/ 66.5%  val 2.094/top1  44.4%/top5  81.1%  99s  <- best
+e009 [head-only      ] train 1.349/ 67.3%  val 2.089/top1  43.9%/top5  80.6%  100s
+e010 [head-only      ] train 1.310/ 66.9%  val 2.088/top1  43.9%/top5  81.1%  145s
+
+--- stage 'finetune-last2': 20 epochs, lr=1.0e-04, trainable params=10,508,830
+e011 [finetune-last2 ] train 0.937/ 73.9%  val 1.493/top1  55.6%/top5  87.2%  141s  <- best
+e012 [finetune-last2 ] train 0.547/ 85.4%  val 1.233/top1  67.2%/top5  93.9%  141s  <- best
+e013 [finetune-last2 ] train 0.377/ 90.1%  val 0.993/top1  71.7%/top5  94.4%  116s  <- best
+e014 [finetune-last2 ] train 0.300/ 92.3%  val 0.928/top1  73.9%/top5  93.9%  128s  <- best
+e015 [finetune-last2 ] train 0.256/ 92.6%  val 0.919/top1  71.1%/top5  95.6%  110s
+e016 [finetune-last2 ] train 0.254/ 92.4%  val 0.828/top1  75.6%/top5  96.1%  127s  <- best
+e017 [finetune-last2 ] train 0.192/ 95.2%  val 0.861/top1  75.0%/top5  96.1%  153s
+e018 [finetune-last2 ] train 0.157/ 96.7%  val 0.789/top1  75.6%/top5  95.0%  161s
+e019 [finetune-last2 ] train 0.178/ 94.6%  val 0.870/top1  75.0%/top5  93.3%  195s
+e020 [finetune-last2 ] train 0.132/ 96.8%  val 0.796/top1  73.3%/top5  96.7%  222s
+e021 [finetune-last2 ] train 0.134/ 96.3%  val 0.846/top1  73.9%/top5  95.0%  211s
+e022 [finetune-last2 ] train 0.135/ 96.5%  val 0.771/top1  74.4%/top5  95.6%  157s
+e023 [finetune-last2 ] train 0.110/ 97.1%  val 0.787/top1  72.8%/top5  95.6%  184s
+e024 [finetune-last2 ] train 0.095/ 98.3%  val 0.805/top1  72.8%/top5  95.0%  212s
+e025 [finetune-last2 ] train 0.094/ 97.7%  val 0.791/top1  75.6%/top5  96.7%  261s
+e026 [finetune-last2 ] train 0.089/ 98.1%  val 0.727/top1  76.1%/top5  97.2%  158s  <- best
+e027 [finetune-last2 ] train 0.102/ 97.9%  val 0.727/top1  75.0%/top5  96.7%  144s
+e028 [finetune-last2 ] train 0.095/ 98.1%  val 0.724/top1  77.2%/top5  96.7%  108s  <- best
+e029 [finetune-last2 ] train 0.111/ 96.7%  val 0.714/top1  75.6%/top5  97.8%  97s
+e030 [finetune-last2 ] train 0.112/ 97.4%  val 0.695/top1  76.7%/top5  97.8%  93s
+
+best val top-1 77.2% (top-5 96.7%) at epoch 28  |  68.9 min total
+checkpoint -> C:\Users\ChristopherAngoe\personal projects\ML\pharm-ml-portfolio\pill-identifier\outputs\checkpoints\transfer_s2_best.pt
+history   -> C:\Users\ChristopherAngoe\personal projects\ML\pharm-ml-portfolio\pill-identifier\outputs\history_transfer_s2.csv
+done transfer seed 2
+ALL SEEDS COMPLETE

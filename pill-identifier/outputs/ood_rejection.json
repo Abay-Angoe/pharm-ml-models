@@ -1,0 +1,73 @@
+{
+ "checkpoint": "transfer_s1_best.pt",
+ "seed": 1,
+ "n_ood_images": 100,
+ "n_ood_products": 20,
+ "target_retention": 0.95,
+ "recommended": {
+  "threshold": 0.8283165829145729,
+  "coverage": 0.7655502392344498,
+  "precision": 0.99375,
+  "ood_rejected": 0.76,
+  "ood_still_named": 0.24
+ },
+ "chosen_threshold": 0.5599474906921387,
+ "ood_rejected_at_threshold": 0.39,
+ "id_wrong_kept_at_threshold": 0.8,
+ "sweep": [
+  {
+   "threshold": 0.0,
+   "id_correct_kept": 1.0,
+   "id_wrong_kept": 1.0,
+   "ood_rejected": 0.0
+  },
+  {
+   "threshold": 0.5,
+   "id_correct_kept": 0.9748743718592965,
+   "id_wrong_kept": 0.9,
+   "ood_rejected": 0.28
+  },
+  {
+   "threshold": 0.7,
+   "id_correct_kept": 0.8844221105527639,
+   "id_wrong_kept": 0.3,
+   "ood_rejected": 0.56
+  },
+  {
+   "threshold": 0.8,
+   "id_correct_kept": 0.8241206030150754,
+   "id_wrong_kept": 0.3,
+   "ood_rejected": 0.72
+  },
+  {
+   "threshold": 0.9,
+   "id_correct_kept": 0.7035175879396985,
+   "id_wrong_kept": 0.0,
+   "ood_rejected": 0.85
+  },
+  {
+   "threshold": 0.95,
+   "id_correct_kept": 0.49246231155778897,
+   "id_wrong_kept": 0.0,
+   "ood_rejected": 0.89
+  },
+  {
+   "threshold": 0.99,
+   "id_correct_kept": 0.24623115577889448,
+   "id_wrong_kept": 0.0,
+   "ood_rejected": 0.94
+  },
+  {
+   "threshold": 0.999,
+   "id_correct_kept": 0.02512562814070352,
+   "id_wrong_kept": 0.0,
+   "ood_rejected": 0.99
+  }
+ ],
+ "median_conf": {
+  "id_correct": 0.9489838480949402,
+  "id_wrong": 0.6387099027633667,
+  "ood": 0.6370589733123779
+ },
+ "verdict": "WEAK - max-softmax barely separates out-of-set pills here"
+}

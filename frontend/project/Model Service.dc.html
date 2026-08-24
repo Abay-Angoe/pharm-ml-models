@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+html,body{margin:0;padding:0;background:#F1EDE6}
+*{box-sizing:border-box}
+a{color:#2E7D74;text-decoration:none}
+a:hover{color:#256760;text-decoration:underline}
+input[type=range]{accent-color:#2E7D74}
+@media (prefers-reduced-motion: reduce){*{transition:none !important}}
+</style>
+</helmet>
+
+<div style="min-height:100vh;min-width:1180px;background:#F1EDE6;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;color:#1C1A16;padding:0 0 60px">
+
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:24px;padding:20px 40px;background:#FBF9F5;border-bottom:1px solid rgba(28,26,22,.10)">
+    <span style="font-size:16px;font-weight:500;letter-spacing:-.012em">Model Service</span>
+    <span style="font-family:'Spline Sans Mono',ui-monospace,monospace;font-size:11px;color:rgba(28,26,22,.4)">{{ timingLabel }}</span>
+  </div>
+
+  <div style="padding:26px 40px 0">
+    <div style="font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:rgba(28,26,22,.42);margin-bottom:11px">Available models</div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
+      <sc-for list="{{ rack }}" as="slot" hint-placeholder-count="4">
+        <button onClick="{{ slot.select }}" style="text-align:left;cursor:pointer;font-family:inherit;padding:15px 16px;border-radius:12px;display:flex;flex-direction:column;gap:9px;background:{{ slot.bg }};border:1px solid {{ slot.border }};opacity:{{ slot.opacity }};transition:background .14s ease,border-color .14s ease">
+          <span style="font-size:15px;font-weight:500;color:#1C1A16;letter-spacing:-.01em">{{ slot.name }}</span>
+          <span style="display:inline-flex;align-items:center;gap:7px">
+            <span style="width:6px;height:6px;border-radius:50%;background:{{ slot.dot }};flex:none"></span>
+            <span style="font-size:12px;color:{{ slot.statusColor }}">{{ slot.status }}</span>
+          </span>
+          <span style="font-size:12px;line-height:1.4;color:rgba(28,26,22,.5);min-height:34px">{{ slot.sub }}</span>
+        </button>
+      </sc-for>
+    </div>
+  </div>
+
+  <sc-if value="{{ isNotBuilt }}" hint-placeholder-val="{{ false }}">
+    <div style="margin:24px 40px 0;padding:46px 42px;border-radius:14px;background:#FBF9F5;border:1px dashed rgba(28,26,22,.20)">
+      <div style="max-width:640px;display:flex;flex-direction:column;gap:14px">
+        <span style="font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#7C5719">Not available yet</span>
+        <span style="font-size:26px;font-weight:500;letter-spacing:-.018em;line-height:1.2">{{ notBuiltTitle }}</span>
+        <span style="font-size:14.5px;line-height:1.55;color:rgba(28,26,22,.62);text-wrap:pretty">{{ notBuiltBody }}</span>
+        <span style="font-size:14.5px;line-height:1.6;color:rgba(28,26,22,.6);border-left:2px solid rgba(46,125,116,.45);padding-left:14px;text-wrap:pretty">{{ notBuiltPlan }}</span>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isDown }}" hint-placeholder-val="{{ false }}">
+    <div style="margin:24px 40px 0;padding:30px 34px;border-radius:14px;background:#FBF6EA;border:1px solid rgba(180,128,42,.4)">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:40px;flex-wrap:wrap">
+        <div style="max-width:640px;display:flex;flex-direction:column;gap:11px">
+          <span style="font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#7C5719">Service not responding</span>
+          <span style="font-size:21px;font-weight:500;letter-spacing:-.014em">The Tox21 model is offline.</span>
+          <span style="font-size:14px;line-height:1.55;color:rgba(28,26,22,.62)">Its health check timed out after 2000 ms. Predictions are unavailable until the service is back; the last response is still readable below.</span>
+          <span style="font-family:'Spline Sans Mono',ui-monospace,monospace;font-size:12.5px;background:#F4EFE3;border:1px solid rgba(28,26,22,.14);border-radius:8px;padding:11px 13px;color:#2E7D74">uvicorn service.app:app --port 8003</span>
+        </div>
+        <button onClick="{{ loadCached }}" style="cursor:pointer;font-family:inherit;font-size:13px;padding:11px 18px;border-radius:22px;background:#2E7D74;border:1px solid #2E7D74;color:#FBF9F5">Open last response</button>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ showSpecimen }}" hint-placeholder-val="{{ true }}">
+  <div style="display:grid;grid-template-columns:minmax(520px,1fr) minmax(460px,500px);gap:16px;padding:20px 40px 0;align-items:start">
+
+    <div style="background:#FBF9F5;border:1px solid rgba(28,26,22,.10);border-radius:14px;overflow:hidden">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:15px 18px;border-bottom:1px solid rgba(28,26,22,.09)">
+        <span style="font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:rgba(28,26,22,.42)">Your input</span>
+        <span style="display:flex;gap:6px">
+          <sc-for list="{{ cases }}" as="c" hint-placeholder-count="4">
+            <button onClick="{{ c.select }}" style="cursor:pointer;font-family:'Spline Sans Mono',ui-monospace,monospace;font-size:11px;padding:5px 10px;border-radius:16px;background:{{ c.bg }};border:1px solid {{ c.border }};color:{{ c.color }}">{{ c.id }}</button>
+          </sc-for>
+        </span>
+      </div>
+
+      <sc-if value="{{ isEmpty }}" hint-placeholder-val="{{ false }}">
+        <div style="padding:26px">
+          <div style="height:380px;border-radius:12px;background:#F3EFE7;border:1px dashed rgba(28,26,22,.20);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px">
+            <span style="width:44px;height:44px;border-radius:50%;background:rgba(46,125,116,.12);border:1px solid rgba(46,125,116,.35)"></span>
+            <span style="font-size:15px;color:rgba(28,26,22,.7)">Drop a scan here, or <span style="color:#2E7D74;text-decoration:underline">choose a file</span></span>
+            <span style="font-size:12.5px;color:rgba(28,26,22,.44)">JPEG or PNG · resized to 224×224 before the model sees it</span>
+            <span style="font-size:12.5px;color:rgba(28,26,22,.44)">Or pick one of the sample scans above</span>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ hasImage }}" hint-placeholder-val="{{ true }}">
+        <div style="padding:26px;display:flex;justify-content:center">
+          <div style="position:relative;width:392px;height:392px;border-radius:12px;border:1px solid rgba(28,26,22,.14);background:#0A0C0D;overflow:hidden">
+            <div style="position:absolute;inset:0;background:radial-gradient(ellipse 46% 52% at 50% 50%,#5A6166 0%,#3A4145 42%,#20262A 66%,#0A0C0D 78%)"></div>
+            <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center">
+              <span style="font-family:'Spline Sans Mono',ui-monospace,monospace;font-size:10.5px;color:rgba(236,237,231,.5);background:rgba(10,12,13,.5);padding:4px 8px;border-radius:4px">specimen image placeholder — {{ specimenNote }}</span>
+            </div>
+            <div style="position:absolute;inset:0;display:grid;grid-template-columns:repeat(7,1fr);grid-template-rows:repeat(7,1fr);filter:blur(17px);opacity:{{ camOpacity }};mix-blend-mode:screen;transition:opacity .16s ease;pointer-events:none">
+              <sc-for list="{{ camCells }}" as="cell" hint-placeholder-count="49">
+                <div style="background:{{ cell.bg }}"></div>
+              </sc-for>
+            </div>
+            <span style="position:absolute;left:12px;top:12px;font-family:'Spline Sans Mono',ui-monospace,monospace;font-size:10.5px;color:rgba(236,237,231,.6)">{{ caseId }}</span>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:18px;padding:0 26px 22px;flex-wrap:wrap">
+          <button onClick="{{ toggleOverlay }}" style="cursor:pointer;font-family:inherit;font-size:12.5px;padding:7px 14px;border-radius:18px;background:{{ overlayBg }};border:1px solid {{ overlayBorder }};color:{{ overlayColor }}">Influence map {{ overlayState }}</button>
+          <span style="display:flex;align-items:center;gap:10px;flex:1;min-width:200px;opacity:{{ sliderOpacity }}">
+            <input type="range" min="0" max="100" step="1" value="{{ opacityPct }}" onChange="{{ setOpacity }}" style="flex:1;height:3px">
+            <span style="font-family:'Spline Sans Mono',ui-monospace,monospace;font-size:11.5px;font-variant-numeric:tabular-nums;color:rgba(28,26,22,.55);width:36px;text-align:right">{{ opacityPct }}%</span>
+          </span>
+          <span style="font-size:12px;color:#7C5719">Coarse 7×7 — shows influence, not tumour margins</span>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ hasSmiles }}" hint-placeholder-val="{{ false }}">
+        <div style="padding:26px">
+          <span style="display:block;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:rgba(28,26,22,.42);margin-bottom:9px">SMILES</span>
+          <div style="font-family:'Spline Sans Mono',ui-monospace,monospace;font-size:15px;color:#245F58;background:#F3EFE7;border:1px solid rgba(28,26,22,.14);border-radius:10px;padding:14px 16px;word-break:break-all">{{ smiles }}</div>
+          <div style="margin-top:16px;height:240px;border-radius:12px;border:1px dashed rgba(28,26,22,.18);background:#F3EFE7;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px">
+            <span style="font-family:'Spline Sans Mono',ui-monospace,monospace;font-size:12px;color:rgba(28,26,22,.45)">2D structure placeholder — RDKit depiction</span>
+            <span style="font-family:'Spline Sans Mono',ui-monospace,monospace;font-size:11px;color:rgba(28,26,22,.32)">{{ molFormula }}</span>
+          </div>
+          <p style="margin:14px 0 0;font-size:12.5px;line-height:1.5;color:rgba(28,26,22,.5)">This model has no explanation view. The fingerprint baseline can't attribute a prediction to part of the molecule, so nothing is shown rather than something invented.</p>
+        </div>
+      </sc-if>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:16px">
+
+      <sc-if value="{{ isEmpty }}" hint-placeholder-val="{{ false }}">
+        <div style="background:#FBF9F5;border:1px solid rgba(28,26,22,.10);border-radius:14px;padding:22px 24px">
+          <span style="display:block;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:rgba(28,26,22,.42);margin-bottom:12px">What you'll get back</span>
+          <p style="margin:0 0 14px;font-size:13.5px;line-height:1.55;color:rgba(28,26,22,.62);text-wrap:pretty">Four probabilities, each shown with the model's raw confidence behind it as a dashed outline — the correction made visible. Plus the model's known weak spots, which stay on screen whether or not you've uploaded anything.</p>
+          <p style="margin:0;font-size:13.5px;line-height:1.55;color:rgba(28,26,22,.62)">Macro-F1 <span style="font-family:'Spline Sans Mono',ui-monospace,monospace">0.898</span> against a <span style="font-family:'Spline Sans Mono',ui-monospace,monospace">0.756</span> baseline. Glioma recall <span style="font-family:'Spline Sans Mono',ui-monospace,monospace">0.834</span> — roughly one in six missed. This is not a diagnostic device.</p>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ hasReading }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex;flex-direction:column;gap:16px">
+
+        <div style="background:#FBF9F5;border:1px solid rgba(28,26,22,.10);border-radius:14px;padding:22px 24px 24px">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px">
+            <span style="font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:rgba(28,26,22,.42)">Result</span>
+            <span style="font-family:'Spline Sans Mono',ui-monospace,monospace;font-size:11px;color:rgba(28,26,22,.4)">{{ outputMode }}</span>
+          </div>
+
+          <sc-if value="{{ isSingleLabel }}" hint-placeholder-val="{{ true }}">
+            <div style="display:flex;align-items:baseline;gap:11px">
+              <span style="font-size:33px;font-weight:500;letter-spacing:-.024em">{{ predictedLabel }}</span>
+              <span style="font-family:'Spline Sans Mono',ui-monospace,monospace;font-size:14px;font-variant-numeric:tabular-nums;color:rgba(28,26,22,.55)">{{ topProb }}</span>
+              <span style="font-size:12px;color:rgba(28,26,22,.4)">raw {{ topRaw }}</span>
+            </div>
+            <div style="display:inline-flex;align-items:center;gap:9px;padding:7px 13px;border-radius:20px;background:{{ bandBg }};border:1px solid {{ bandBorder }};margin:12px 0 18px">
+              <span style="width:6px;height:6px;border-radius:50%;background:{{ bandDot }}"></span>
+              <span style="font-size:12.5px;color:{{ bandText }}">{{ bandLabel }}</span>
+              <span style="font-size:12.5px;color:rgba(28,26,22,.5)">{{ bandReason }}</span>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ isMultiLabel }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-bottom:16px">
+              <div style="font-size:20px;font-weight:500;letter-spacing:-.014em;margin-bottom:6px">Twelve independent assays</div>
+              <p style="margin:0;font-size:13px;line-height:1.5;color:rgba(28,26,22,.6)">There is no single answer here. Each endpoint is its own probability and they do not add up to 1 — read each one against its own base rate, marked on the track.</p>
+            </div>
+          </sc-if>
+
+          <div>
+            <sc-for list="{{ rows }}" as="row" hint-placeholder-count="4">
+              <div style="display:grid;grid-template-columns:118px 1fr 88px;gap:12px;align-items:center;padding:9px 0">
+                <span style="display:flex;flex-direction:column;gap:2px;min-width:0">
+                  <span style="font-size:13.5px;color:{{ row.labelColor }};overflow:hidden;text-overflow:ellipsis">{{ row.label }}</span>
+                  <span style="font-family:'Spline Sans Mono',ui-monospace,monospace;font-size:10px;color:rgba(28,26,22,.36)">{{ row.meta }}</span>
+                </span>
+                <span style="position:relative;display:block;height:14px;background:rgba(28,26,22,.07);border-radius:7px">
+                  <span style="position:absolute;top:0;bottom:0;left:0;width:{{ row.ghostW }};border:1px dashed rgba(28,26,22,.42);border-radius:7px;background:{{ row.ghostFill }};transition:width .5s cubic-bezier(.22,.9,.3,1)"></span>
+                  <span style="position:absolute;top:3px;bottom:3px;left:0;width:{{ row.barW }};background:{{ row.barColor }};border-radius:5px;transition:width .62s cubic-bezier(.22,.9,.3,1) .34s"></span>
+                  <span style="position:absolute;top:-2px;bottom:-2px;left:{{ row.baseLeft }};width:1px;background:rgba(28,26,22,.5);opacity:{{ row.baseOpacity }}"></span>
+                </span>
+                <span style="display:flex;align-items:baseline;justify-content:flex-end;gap:8px">
+                  <span style="font-family:'Spline Sans Mono',ui-monospace,monospace;font-size:13px;font-variant-numeric:tabular-nums;color:{{ row.probColor }}">{{ row.prob }}</span>
+                  <span style="font-family:'Spline Sans Mono',ui-monospace,monospace;font-size:10px;font-variant-numeric:tabular-nums;color:rgba(28,26,22,.34);width:34px;text-align:right">{{ row.raw }}</span>
+                </span>
+              </div>
+              <sc-if value="{{ row.flagged }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex;gap:10px;margin:2px 0 10px;padding:11px 13px;border-radius:10px;background:rgba(180,128,42,.10)">
+                  <span style="font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#7C5719;flex:none;padding-top:1px">{{ row.flagCode }}</span>
+                  <span style="font-size:12.5px;line-height:1.45;color:rgba(28,26,22,.7);text-wrap:pretty">{{ row.flagText }}</span>
+                </div>
+              </sc-if>
+            </sc-for>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:18px;margin-top:14px;padding-top:13px;border-top:1px solid rgba(28,26,22,.1);flex-wrap:wrap">
+            <span style="display:flex;align-items:center;gap:8px">
+              <span style="width:22px;height:8px;background:#2E7D74;border-radius:4px"></span>
+              <span style="font-size:11.5px;color:rgba(28,26,22,.55)">calibrated</span>
+            </span>
+            <span style="display:flex;align-items:center;gap:8px">
+              <span style="width:22px;height:12px;border:1px dashed rgba(28,26,22,.45);border-radius:6px"></span>
+              <span style="font-size:11.5px;color:rgba(28,26,22,.55)">raw, before correction</span>
+            </span>
+            <span style="font-family:'Spline Sans Mono',ui-monospace,monospace;font-size:10.5px;color:rgba(28,26,22,.38);margin-left:auto">{{ calibLabel }}</span>
+          </div>
+        </div>
+
+        <div style="background:#FBF9F5;border:1px solid rgba(28,26,22,.10);border-radius:14px;padding:22px 24px 24px">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:15px">
+            <span style="font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:rgba(28,26,22,.42)">How much to trust this</span>
+            <span style="display:flex;gap:6px">
+              <sc-for list="{{ variants }}" as="v" hint-placeholder-count="2">
+                <button onClick="{{ v.select }}" style="cursor:pointer;font-family:'Spline Sans Mono',ui-monospace,monospace;font-size:10.5px;padding:5px 10px;border-radius:16px;background:{{ v.bg }};border:1px solid {{ v.border }};color:{{ v.color }}">{{ v.name }}</button>
+              </sc-for>
+            </span>
+          </div>
+
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px">
+            <sc-for list="{{ metrics }}" as="m" hint-placeholder-count="3">
+              <span style="display:flex;flex-direction:column;gap:3px;padding:12px 13px;border-radius:10px;background:#F3EFE7">
+                <span style="font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:rgba(28,26,22,.45)">{{ m.k }}</span>
+                <span style="font-family:'Spline Sans Mono',ui-monospace,monospace;font-size:17px;font-variant-numeric:tabular-nums">{{ m.v }}</span>
+                <span style="font-size:11px;line-height:1.35;color:rgba(28,26,22,.5)">{{ m.note }}</span>
+              </span>
+            </sc-for>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:9px;margin-bottom:16px">
+            <sc-for list="{{ caveats }}" as="cv" hint-placeholder-count="3">
+              <span style="display:grid;grid-template-columns:62px 1fr;gap:10px;align-items:start">
+                <span style="font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:{{ cv.color }};padding-top:3px">{{ cv.scope }}</span>
+                <span style="font-size:13px;line-height:1.5;color:rgba(28,26,22,.72);text-wrap:pretty">{{ cv.text }}</span>
+              </span>
+            </sc-for>
+          </div>
+
+          <div style="border-top:1px solid rgba(28,26,22,.1);padding-top:14px;display:grid;grid-template-columns:1fr 1fr;gap:7px 16px">
+            <sc-for list="{{ facts }}" as="f" hint-placeholder-count="6">
+              <span style="display:flex;align-items:baseline;justify-content:space-between;gap:8px;font-family:'Spline Sans Mono',ui-monospace,monospace;font-size:10.5px">
+                <span style="color:rgba(28,26,22,.42)">{{ f.k }}</span>
+                <span style="color:rgba(28,26,22,.78);font-variant-numeric:tabular-nums;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ f.v }}</span>
+              </span>
+            </sc-for>
+          </div>
+
+          <button onClick="{{ toggleJson }}" style="cursor:pointer;margin-top:15px;font-family:'Spline Sans Mono',ui-monospace,monospace;font-size:11px;padding:7px 13px;border-radius:16px;background:transparent;border:1px solid rgba(28,26,22,.22);color:rgba(28,26,22,.6)" style-hover="background:rgba(28,26,22,.05)">{{ jsonToggleLabel }}</button>
+          <sc-if value="{{ showJson }}" hint-placeholder-val="{{ false }}">
+            <pre style="margin:12px 0 0;padding:14px;background:#F3EFE7;border:1px solid rgba(28,26,22,.12);border-radius:10px;color:#2F4744;font-family:'Spline Sans Mono',ui-monospace,monospace;font-size:10.5px;line-height:1.5;max-height:300px;overflow:auto;white-space:pre-wrap;word-break:break-word">{{ jsonText }}</pre>
+          </sc-if>
+        </div>
+
+      </div>
+      </sc-if>
+
+    </div>
+  </div>
+  </sc-if>
+
+  <p style="margin:0;padding:24px 40px 0;font-size:12.5px;line-height:1.5;color:rgba(28,26,22,.42);max-width:880px">Not a diagnostic device. Every number here measures a model, not a person, and none of it is validated for clinical use.</p>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:1000},&quot;showGhost&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Calibration ghost&quot;},&quot;ghostStyle&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;outline&quot;,&quot;hatch&quot;],&quot;default&quot;:&quot;outline&quot;,&quot;tsType&quot;:&quot;\&quot;outline\&quot; | \&quot;hatch\&quot;&quot;,&quot;section&quot;:&quot;Calibration ghost&quot;},&quot;accentColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#2E7D74&quot;,&quot;options&quot;:[&quot;#2E7D74&quot;,&quot;#37727F&quot;,&quot;#4A6E8A&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Palette&quot;}}">
+const CLASSES = ["glioma", "meningioma", "notumor", "pituitary"];
+
+const MRI_CASES = {
+  "MRI-0413": {
+    predicted_label: "glioma",
+    confidence_band: "review_recommended",
+    band_reason: "top-2 margin 0.34 · under the 0.65 threshold",
+    timing_ms: 143,
+    note: "axial T1c, 512² source",
+    cam: [0.02,0.04,0.06,0.05,0.03,0.02,0.01, 0.05,0.12,0.28,0.22,0.09,0.04,0.02, 0.08,0.31,0.72,0.61,0.24,0.08,0.03, 0.09,0.38,0.94,0.83,0.31,0.10,0.04, 0.06,0.22,0.55,0.47,0.19,0.07,0.03, 0.03,0.09,0.17,0.14,0.08,0.04,0.02, 0.01,0.03,0.05,0.04,0.03,0.02,0.01],
+    preds: [
+      { label:"glioma", index:0, prob:0.561, prob_raw:0.472, base_rate:null, flags:[] },
+      { label:"meningioma", index:1, prob:0.221, prob_raw:0.318, base_rate:null, flags:[] },
+      { label:"notumor", index:2, prob:0.126, prob_raw:0.121, base_rate:null, flags:["class_compromised"] },
+      { label:"pituitary", index:3, prob:0.092, prob_raw:0.089, base_rate:null, flags:[] }
+    ]
+  },
+  "MRI-0118": {
+    predicted_label: "notumor",
+    confidence_band: "calibrated_confident",
+    band_reason: "high probability — but see the row flag below",
+    timing_ms: 131,
+    note: "axial T2, 256² source",
+    cam: [0.03,0.05,0.07,0.07,0.06,0.04,0.02, 0.06,0.11,0.14,0.15,0.13,0.08,0.04, 0.08,0.15,0.21,0.23,0.19,0.12,0.05, 0.09,0.17,0.24,0.26,0.22,0.13,0.06, 0.07,0.14,0.20,0.21,0.18,0.11,0.05, 0.05,0.09,0.13,0.13,0.11,0.07,0.03, 0.02,0.04,0.06,0.06,0.05,0.03,0.02],
+    preds: [
+      { label:"glioma", index:0, prob:0.064, prob_raw:0.021, base_rate:null, flags:[] },
+      { label:"meningioma", index:1, prob:0.041, prob_raw:0.019, base_rate:null, flags:[] },
+      { label:"notumor", index:2, prob:0.871, prob_raw:0.947, base_rate:null, flags:["class_compromised"] },
+      { label:"pituitary", index:3, prob:0.024, prob_raw:0.013, base_rate:null, flags:[] }
+    ]
+  },
+  "MRI-0902": {
+    predicted_label: "pituitary",
+    confidence_band: "calibrated_confident",
+    band_reason: "top-2 margin 0.869",
+    timing_ms: 138,
+    note: "coronal T1c, 512² source",
+    cam: [0.01,0.02,0.03,0.03,0.02,0.02,0.01, 0.02,0.05,0.08,0.09,0.07,0.04,0.02, 0.03,0.09,0.18,0.22,0.15,0.07,0.03, 0.05,0.16,0.44,0.68,0.39,0.13,0.04, 0.07,0.28,0.81,0.97,0.72,0.22,0.06, 0.04,0.13,0.33,0.41,0.29,0.11,0.04, 0.02,0.05,0.09,0.11,0.08,0.04,0.02],
+    preds: [
+      { label:"glioma", index:0, prob:0.031, prob_raw:0.011, base_rate:null, flags:[] },
+      { label:"meningioma", index:1, prob:0.043, prob_raw:0.026, base_rate:null, flags:[] },
+      { label:"notumor", index:2, prob:0.014, prob_raw:0.005, base_rate:null, flags:[] },
+      { label:"pituitary", index:3, prob:0.912, prob_raw:0.958, base_rate:null, flags:[] }
+    ]
+  }
+};
+
+const TOX21 = [
+  { label:"NR-AR",         index:0,  prob:0.081, prob_raw:0.134, base_rate:0.042, flags:[] },
+  { label:"NR-AR-LBD",     index:1,  prob:0.046, prob_raw:0.072, base_rate:0.035, flags:[] },
+  { label:"NR-AhR",        index:2,  prob:0.412, prob_raw:0.561, base_rate:0.118, flags:[] },
+  { label:"NR-Aromatase",  index:3,  prob:0.093, prob_raw:0.140, base_rate:0.051, flags:[] },
+  { label:"NR-ER",         index:4,  prob:0.268, prob_raw:0.351, base_rate:0.127, flags:[] },
+  { label:"NR-ER-LBD",     index:5,  prob:0.074, prob_raw:0.111, base_rate:0.043, flags:[] },
+  { label:"NR-PPAR-gamma", index:6,  prob:0.038, prob_raw:0.059, base_rate:0.032, flags:["below_base_rate"] },
+  { label:"SR-ARE",        index:7,  prob:0.503, prob_raw:0.648, base_rate:0.163, flags:[] },
+  { label:"SR-ATAD5",      index:8,  prob:0.067, prob_raw:0.104, base_rate:0.036, flags:[] },
+  { label:"SR-HSE",        index:9,  prob:0.119, prob_raw:0.178, base_rate:0.066, flags:[] },
+  { label:"SR-MMP",        index:10, prob:0.437, prob_raw:0.572, base_rate:0.157, flags:[] },
+  { label:"SR-p53",        index:11, prob:0.146, prob_raw:0.211, base_rate:0.061, flags:["sparse_support"] }
+];
+
+const FLAG_TEXT = {
+  class_compromised: "Test performance unreliable pending leakage rebuild — 86.8% of this class's test images duplicated training data. Treat any notumor mass as unverified, in either direction.",
+  below_base_rate: "Predicted probability sits below this assay's training base rate (0.032). The model is saying \"less likely than a random compound\", which is a weak signal, not a clean negative.",
+  sparse_support: "Only 84 actives in the leakage-clean test fold for this endpoint. The threshold here is poorly estimated."
+};
+
+function heat(v) {
+  const t = Math.max(0, Math.min(1, v));
+  if (t < 0.02) return "rgba(0,0,0,0)";
+  const stops = [[8,10,60],[120,20,110],[210,55,60],[248,140,20],[255,232,120]];
+  const p = t * (stops.length - 1), i = Math.min(stops.length - 2, Math.floor(p)), f = p - i;
+  const c = stops[i].map((a, k) => Math.round(a + (stops[i + 1][k] - a) * f));
+  return "rgba(" + c[0] + "," + c[1] + "," + c[2] + "," + (0.28 + 0.72 * t).toFixed(2) + ")";
+}
+
+class Component extends DCLogic {
+  state = { model:"brain-mri", caseId:"MRI-0413", variant:"resnet18-transfer", overlay:true, opacity:0.55, phase:0, cached:false, showJson:false };
+
+  componentDidMount() { this.animate(); }
+
+  animate() {
+    const reduced = typeof matchMedia === "function" && matchMedia("(prefers-reduced-motion: reduce)").matches;
+    clearTimeout(this._t1); clearTimeout(this._t2);
+    if (reduced) { this.setState({ phase: 2 }); return; }
+    this.setState({ phase: 0 });
+    this._t1 = setTimeout(() => this.setState({ phase: 1 }), 70);
+    this._t2 = setTimeout(() => this.setState({ phase: 2 }), 420);
+  }
+
+  componentWillUnmount() { clearTimeout(this._t1); clearTimeout(this._t2); }
+
+  pick(model) {
+    const cached = model === "tox21" ? false : this.state.cached;
+    this.setState({ model, cached }, () => this.animate());
+  }
+
+  pickCase(caseId) { this.setState({ caseId }, () => this.animate()); }
+
+  renderVals() {
+    const s = this.state;
+    const accent = this.props.accentColor ?? "#2E7D74";
+    const ghostMode = this.props.ghostStyle ?? "outline";
+    const showGhost = this.props.showGhost ?? true;
+
+    const rackDef = [
+      { id:"brain-mri", name:"Brain MRI", port:8001, status:"trained", sub:"ResNet18 transfer + from-scratch CNN. Two variants, both readable." },
+      { id:"pill-id", name:"Pill ID", port:8002, status:"not built", sub:"Imprint / shape / colour classifier over 22 classes." },
+      { id:"tox21", name:"Tox21", port:8003, status:"baseline only", sub:"Fingerprint + random forest. The simple model is the shipped model." },
+      { id:"adr", name:"ADR", port:8004, status:"not built", sub:"Binary adverse-reaction sentence classifier." }
+    ];
+    const statusColor = { "trained": accent, "baseline only":"#B4802A", "not built":"rgba(28,26,22,.38)" };
+    const rack = rackDef.map(r => ({
+      ...r,
+      select: () => this.pick(r.id),
+      bg: s.model === r.id ? "#EFEAE1" : "#FBF9F5",
+      border: s.model === r.id ? "rgba(46,125,116,.55)" : "rgba(28,26,22,.12)",
+      opacity: r.status === "not built" ? 0.62 : 1,
+      dot: statusColor[r.status],
+      statusColor: statusColor[r.status]
+    }));
+
+    const isMri = s.model === "brain-mri";
+    const isTox = s.model === "tox21";
+    const isNotBuilt = s.model === "pill-id" || s.model === "adr";
+    const isDown = isTox && !s.cached;
+    const isEmpty = isMri && s.caseId === "empty";
+    const hasReading = (isMri && !isEmpty) || (isTox && s.cached);
+
+    const caseIds = ["empty", "MRI-0413", "MRI-0118", "MRI-0902"];
+    const cases = isMri ? caseIds.map(id => ({
+      id: id === "empty" ? "no input" : id,
+      select: () => this.pickCase(id),
+      bg: s.caseId === id ? "rgba(46,125,116,.12)" : "transparent",
+      border: s.caseId === id ? "rgba(46,125,116,.5)" : "rgba(28,26,22,.14)",
+      color: s.caseId === id ? "#2E7D74" : "rgba(28,26,22,.5)"
+    })) : [];
+
+    const mri = MRI_CASES[s.caseId] || MRI_CASES["MRI-0413"];
+    const src = isTox ? TOX21 : mri.preds;
+    const scale = isTox ? 0.65 : 1;
+    const p = s.phase;
+
+    const rows = src.map(r => {
+      const flagged = r.flags.length > 0;
+      const isTop = !isTox && r.label === mri.predicted_label;
+      return {
+        label: r.label,
+        meta: isTox
+          ? "base rate " + r.base_rate.toFixed(3)
+          : "class index " + r.index,
+        labelColor: flagged ? "#7C5719" : (isTop ? "#1C1A16" : "rgba(28,26,22,.72)"),
+        prob: r.prob.toFixed(3),
+        raw: r.prob_raw.toFixed(3),
+        probColor: isTop || (isTox && r.prob > r.base_rate * 3) ? "#1C1A16" : "rgba(28,26,22,.62)",
+        barW: (p < 2 ? 0 : (r.prob / scale) * 100).toFixed(2) + "%",
+        ghostW: (!showGhost || p < 1 ? 0 : (r.prob_raw / scale) * 100).toFixed(2) + "%",
+        ghostFill: ghostMode === "hatch"
+          ? "repeating-linear-gradient(135deg,rgba(28,26,22,.14) 0 3px,transparent 3px 6px)"
+          : "transparent",
+        barColor: flagged ? "#B4802A" : (isTop ? accent : "rgba(28,26,22,.3)"),
+        baseLeft: isTox ? ((r.base_rate / scale) * 100).toFixed(2) + "%" : "0%",
+        baseOpacity: isTox ? 1 : 0,
+        flagged,
+        flagCode: flagged ? r.flags[0] : "",
+        flagText: flagged ? FLAG_TEXT[r.flags[0]] : ""
+      };
+    });
+
+    const bandMap = {
+      review_recommended: { label:"Review recommended", bg:"rgba(180,128,42,.16)", border:"rgba(180,128,42,.55)", dot:"#B4802A", text:"#7C5719" },
+      calibrated_confident: { label:"Calibrated and confident", bg:"rgba(28,26,22,.05)", border:"rgba(28,26,22,.18)", dot:"rgba(28,26,22,.4)", text:"rgba(28,26,22,.6)" }
+    };
+    const band = bandMap[mri.confidence_band];
+
+    const camCells = (mri.cam || []).map(v => ({ bg: heat(v * (0.85 + 0.15)) }));
+
+    const variantDefs = isTox
+      ? [{ id:"rf-morgan", name:"rf-morgan ✓" }, { id:"gnn", name:"gnn (not trained)" }]
+      : [{ id:"resnet18-transfer", name:"resnet18-transfer" }, { id:"cnn-baseline", name:"cnn-baseline" }];
+    const variants = variantDefs.map(v => ({
+      name: v.name,
+      select: () => this.setState({ variant: v.id }),
+      bg: s.variant === v.id ? "rgba(46,125,116,.16)" : "transparent",
+      border: s.variant === v.id ? "rgba(46,125,116,.65)" : "rgba(28,26,22,.2)",
+      color: s.variant === v.id ? "#2E7D74" : "rgba(28,26,22,.55)"
+    }));
+
+    const isCnn = s.variant === "cnn-baseline";
+    const metrics = isTox
+      ? [
+          { k:"mean ROC-AUC", v:"0.792", note:"12 assays, unweighted" },
+          { k:"vs GNN", v:"+0.021", note:"the simple model won" },
+          { k:"seeds", v:"3", note:"± 0.008" }
+        ]
+      : [
+          { k:"macro-F1", v: isCnn ? "0.756" : "0.898", note: isCnn ? "the from-scratch baseline" : "vs 0.756 baseline" },
+          { k:"glioma recall", v: isCnn ? "0.691" : "0.834", note:"~1 in 6 missed" },
+          { k:"seeds", v:"1", note:"no ± available — single run" }
+        ];
+
+    const caveats = isTox
+      ? [
+          { scope:"model", color:"rgba(28,26,22,.45)", text:"Fingerprint + random forest baseline. A graph network was trained and lost by 0.021 mean ROC-AUC at this data scale; the simpler model is the shipped one." },
+          { scope:"model", color:"rgba(28,26,22,.45)", text:"No substructure attribution. The RF over Morgan fingerprints has no per-atom explanation implemented, and none is faked." },
+          { scope:"class", color:"#7C5719", text:"SR-p53 and NR-PPAR-gamma have sparse positive support; their thresholds are poorly estimated." }
+        ]
+      : [
+          { scope:"model", color:"rgba(28,26,22,.45)", text:"Not a diagnostic device. This is a portfolio model trained on a public dataset." },
+          { scope:"class", color:"#7C5719", text:"notumor test performance unreliable pending leakage rebuild — 86.8% of that class's test images duplicated training data." },
+          { scope:"model", color:"rgba(28,26,22,.45)", text:"Glioma recall 0.834 — roughly 1 in 6 missed, some of them landing on notumor. The two weaknesses compound." },
+          { scope:"calib", color:"rgba(28,26,22,.45)", text:"Temperature scaling cut errors at p>0.99 from 20 to 5. Every probability on this page is post-calibration; the raw softmax is shown only as a ghost." }
+        ];
+
+    const facts = isTox
+      ? [
+          { k:"model_id", v:"tox21" }, { k:"variant", v:"rf-morgan" },
+          { k:"output_mode", v:"multi_label" }, { k:"predicted_label", v:"null" },
+          { k:"calibrated", v:"true (isotonic)" }, { k:"explanation", v:"none" },
+          { k:"trained_at", v:"2026-07-24" }, { k:"artifact", v:"rf_morgan.joblib · 12.4 MB" }
+        ]
+      : [
+          { k:"model_id", v:"brain-mri" }, { k:"variant", v:s.variant },
+          { k:"output_mode", v:"single_label" }, { k:"class_order", v:"index-sensitive" },
+          { k:"calibrated", v:"true (temperature)" }, { k:"temperature", v:"1.32413" },
+          { k:"logit_offsets", v:"glioma +2.1" }, { k:"artifact_sha256", v:"9c4f…a17e" },
+          { k:"trained_at", v:"2026-08-01" }, { k:"artifact", v:"resnet18_transfer.pth · 44.8 MB" }
+        ];
+
+    const contract = isTox
+      ? { contract_version:"1.0", model:{ id:"tox21", variant:"rf-morgan", status:"baseline_only" }, output_mode:"multi_label", predicted_label:null, calibrated:true, calibration:{ method:"isotonic" }, predictions:TOX21, confidence_band:null, explanation:{ type:"none", payload:{ reason:"Substructure attribution not implemented for the RF baseline." } }, timing_ms:38 }
+      : { contract_version:"1.0", model:{ id:"brain-mri", name:"Brain MRI Tumor Classifier", variant:s.variant, variants_available:["cnn-baseline","resnet18-transfer"], status:"trained", trained_at:"2026-08-01T00:00:00Z" }, input:{ modality:"image", echo:{ kind:"png_b64", data:"…", note:"post-preprocessing 224x224, what the model actually saw" } }, output_mode:"single_label", predicted_label:mri.predicted_label, calibrated:true, calibration:{ method:"temperature", temperature:1.32413, logit_offsets:{ glioma:2.1 } }, predictions:mri.preds, confidence_band:mri.confidence_band, explanation:{ type:"heatmap", payload:{ resolution_note:"7x7 upsampled to 224 — shows influence, not boundaries" } }, caveats:[{ scope:"class", target:"notumor", severity:"warning", text:FLAG_TEXT.class_compromised }], timing_ms:mri.timing_ms };
+
+    return {
+      rack, cases, rows, metrics, caveats, facts, variants, camCells,
+      isNotBuilt, isDown, hasReading, isEmpty,
+      showSpecimen: isMri || (isTox && s.cached),
+      hasImage: isMri && !isEmpty,
+      hasSmiles: isTox && s.cached,
+      isSingleLabel: isMri && !isEmpty,
+      isMultiLabel: isTox && s.cached,
+      outputMode: isTox ? "12 independent assays" : "4 classes · sums to 1",
+      predictedLabel: mri.predicted_label,
+      topProb: (mri.preds.find(r => r.label === mri.predicted_label).prob).toFixed(3),
+      topRaw: (mri.preds.find(r => r.label === mri.predicted_label).prob_raw).toFixed(3),
+      bandLabel: band.label, bandBg: band.bg, bandBorder: band.border, bandDot: band.dot, bandText: band.text,
+      bandReason: mri.band_reason,
+      calibLabel: isTox ? "isotonic per-assay" : "T = 1.32413 · glioma logit +2.1",
+      caseId: s.caseId, specimenNote: mri.note,
+      timingLabel: hasReading ? "responded in " + (isTox ? 38 : mri.timing_ms) + " ms" : (isDown ? "no response" : (isNotBuilt ? "not accepting input" : "ready — no input yet")),
+      camOpacity: s.overlay ? s.opacity : 0,
+      opacityPct: Math.round(s.opacity * 100),
+      sliderOpacity: s.overlay ? 1 : 0.35,
+      overlayState: s.overlay ? "on" : "off",
+      overlayBg: s.overlay ? "rgba(46,125,116,.12)" : "transparent",
+      overlayBorder: s.overlay ? "rgba(46,125,116,.5)" : "rgba(28,26,22,.18)",
+      overlayColor: s.overlay ? "#2E7D74" : "rgba(28,26,22,.5)",
+      toggleOverlay: () => this.setState({ overlay: !s.overlay }),
+      setOpacity: (e) => this.setState({ opacity: Number(e.target.value) / 100 }),
+      loadCached: () => this.setState({ cached: true, variant: "rf-morgan" }, () => this.animate()),
+      smiles: "Cn1cnc2c1c(=O)n(C)c(=O)n2C",
+      molFormula: "C8H10N4O2 · MW 194.19 · cached 2026-08-04",
+      notBuiltTitle: s.model === "pill-id" ? "Pill identification — 22 classes, imprint-driven" : "Adverse drug reaction — binary sentence classifier",
+      notBuiltBody: s.model === "pill-id"
+        ? "This model has not been trained yet."
+        : "This model has not been trained yet.",
+      notBuiltPlan: s.model === "pill-id"
+        ? "When it is, you will get the three closest matches, the pairs it most often confuses, and an answer to the question that actually matters: is it reading the imprint, or just the colour and shape?"
+        : "When it is, the sentence you submit becomes the result — the words that drove the call highlighted in place — and it will be judged on missed reactions first, since those cost more than false alarms.",
+      showJson: s.showJson,
+      jsonToggleLabel: s.showJson ? "hide contract response" : "show contract response",
+      jsonText: JSON.stringify(contract, null, 2),
+      toggleJson: () => this.setState({ showJson: !s.showJson })
+    };
+  }
+}
+</script>
+</body>
+</html>

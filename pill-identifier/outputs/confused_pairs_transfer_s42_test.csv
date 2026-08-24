@@ -1,0 +1,11 @@
+phase,seed,count,true_class,predicted_class,same_drug_group
+transfer,42,2,amrix_30mg_cap,flutamide_cap,1
+transfer,42,2,hydralazine,allopurinol_300mg,0
+transfer,42,2,levoxyl_0_025mg,levoxyl_0_075mg,1
+transfer,42,1,amaryl_4mg,bethanechol_10mg,0
+transfer,42,1,amrix_30mg_cap,gabitril_16mg,0
+transfer,42,1,fludrocortisone,gabitril_4mg,0
+transfer,42,1,fludrocortisone,hyzaar_50_12_5,0
+transfer,42,1,gabitril_2mg,bethanechol_10mg,0
+transfer,42,1,glipizide_metformin,glyburide_metformin_b,0
+transfer,42,1,hyzaar_50_12_5,gabitril_4mg,0

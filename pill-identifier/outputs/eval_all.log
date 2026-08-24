@@ -1,0 +1,242 @@
+=== baseline_s42 on test (184 images, 20 classes) ===
+checkpoint epoch 27, val top-1 59.8%
+
+top-1 accuracy (HEADLINE) : 46.20%   (chance 5.0%)
+top-3 accuracy (secondary; 'close enough for a lookup tool') : 73.91%   (chance 15.0%)
+  [top-5 intentionally not reported: ~17-33% by chance at this class count]
+
+--- accuracy by localisation method ---
+  pill detected  : n=  84  top-1  57.1%  top-3  83.3%
+  centre fallback: n= 100  top-1  37.0%  top-3  66.0%
+
+--- error structure ---
+  99 errors; 9 (9%) stay inside the same drug group
+  (high share = model gets the drug family right, misses the imprint/dose detail)
+
+macro F1: 0.462   -> per-class metrics appended to metrics.csv
+
+weakest classes by F1:
+  0.00  levoxyl_0_025mg                      (P 0.00 R 0.00) [levoxyl]
+  0.11  amrix_30mg_cap                       (P 0.25 R 0.07) [capsule]
+  0.13  bethanechol_10mg                     (P 0.33 R 0.08) [-]
+  0.25  amaryl_4mg                           (P 0.24 R 0.27) [glimepiride]
+  0.30  levoxyl_0_075mg                      (P 0.25 R 0.38) [levoxyl]
+  0.33  fluconazole_100mg                    (P 0.30 R 0.38) [-]
+
+most-confused pairs (true -> predicted):
+   7x  amrix_30mg_cap                     -> allopurinol_300mg                  [CROSS-GROUP]
+   5x  amaryl_4mg                         -> gabitril_16mg                      [CROSS-GROUP]
+   5x  levoxyl_0_025mg                    -> levoxyl_0_075mg                    [same-group]
+   5x  levoxyl_0_075mg                    -> glimepiride_generic                [CROSS-GROUP]
+   4x  amrix_30mg_cap                     -> amaryl_4mg                         [CROSS-GROUP]
+   4x  bethanechol_10mg                   -> amaryl_4mg                         [CROSS-GROUP]
+   3x  bethanechol_10mg                   -> allopurinol_300mg                  [CROSS-GROUP]
+   3x  depakote_sprinkle                  -> allopurinol_300mg                  [CROSS-GROUP]
+   3x  flutamide_cap                      -> amrix_30mg_cap                     [same-group]
+   3x  glimepiride_generic                -> gabitril_2mg                       [CROSS-GROUP]
+   3x  glipizide_metformin                -> fluconazole_100mg                  [CROSS-GROUP]
+   3x  hydralazine                        -> glyburide_metformin_b              [CROSS-GROUP]
+confused-pairs table -> confused_pairs_baseline_s42_test.csv
+
+confusion matrix -> C:\Users\ChristopherAngoe\personal projects\ML\pharm-ml-portfolio\pill-identifier\outputs\figures\confusion_baseline_s42_test.png
+=== baseline_s1 on test (184 images, 20 classes) ===
+checkpoint epoch 23, val top-1 62.7%
+
+top-1 accuracy (HEADLINE) : 42.93%   (chance 5.0%)
+top-3 accuracy (secondary; 'close enough for a lookup tool') : 73.91%   (chance 15.0%)
+  [top-5 intentionally not reported: ~17-33% by chance at this class count]
+
+--- accuracy by localisation method ---
+  pill detected  : n=  84  top-1  58.3%  top-3  88.1%
+  centre fallback: n= 100  top-1  30.0%  top-3  62.0%
+
+--- error structure ---
+  105 errors; 8 (8%) stay inside the same drug group
+  (high share = model gets the drug family right, misses the imprint/dose detail)
+
+macro F1: 0.429   -> per-class metrics appended to metrics.csv
+
+weakest classes by F1:
+  0.00  amaryl_4mg                           (P 0.00 R 0.00) [glimepiride]
+  0.00  amrix_30mg_cap                       (P 0.00 R 0.00) [capsule]
+  0.10  bethanechol_10mg                     (P 0.12 R 0.08) [-]
+  0.17  levoxyl_0_025mg                      (P 0.25 R 0.12) [levoxyl]
+  0.22  glipizide_metformin                  (P 0.50 R 0.14) [-]
+  0.32  gabitril_2mg                         (P 0.24 R 0.50) [gabitril]
+
+most-confused pairs (true -> predicted):
+   5x  amrix_30mg_cap                     -> allopurinol_300mg                  [CROSS-GROUP]
+   4x  amaryl_4mg                         -> gabitril_16mg                      [CROSS-GROUP]
+   4x  amrix_30mg_cap                     -> bethanechol_10mg                   [CROSS-GROUP]
+   4x  levoxyl_0_025mg                    -> levoxyl_0_075mg                    [same-group]
+   3x  amaryl_4mg                         -> gabitril_2mg                       [CROSS-GROUP]
+   3x  amrix_30mg_cap                     -> amaryl_4mg                         [CROSS-GROUP]
+   3x  amrix_30mg_cap                     -> gabitril_2mg                       [CROSS-GROUP]
+   3x  bethanechol_10mg                   -> allopurinol_300mg                  [CROSS-GROUP]
+   3x  glimepiride_generic                -> gabitril_2mg                       [CROSS-GROUP]
+   3x  hyzaar_50_12_5                     -> glyburide_metformin_a              [CROSS-GROUP]
+   2x  allopurinol_300mg                  -> gabitril_2mg                       [CROSS-GROUP]
+   2x  amaryl_4mg                         -> allopurinol_300mg                  [CROSS-GROUP]
+confused-pairs table -> confused_pairs_baseline_s1_test.csv
+
+confusion matrix -> C:\Users\ChristopherAngoe\personal projects\ML\pharm-ml-portfolio\pill-identifier\outputs\figures\confusion_baseline_s1_test.png
+=== baseline_s2 on test (184 images, 20 classes) ===
+checkpoint epoch 30, val top-1 61.7%
+
+top-1 accuracy (HEADLINE) : 48.91%   (chance 5.0%)
+top-3 accuracy (secondary; 'close enough for a lookup tool') : 76.09%   (chance 15.0%)
+  [top-5 intentionally not reported: ~17-33% by chance at this class count]
+
+--- accuracy by localisation method ---
+  pill detected  : n=  84  top-1  61.9%  top-3  89.3%
+  centre fallback: n= 100  top-1  38.0%  top-3  65.0%
+
+--- error structure ---
+  94 errors; 5 (5%) stay inside the same drug group
+  (high share = model gets the drug family right, misses the imprint/dose detail)
+
+macro F1: 0.495   -> per-class metrics appended to metrics.csv
+
+weakest classes by F1:
+  0.00  bethanechol_10mg                     (P 0.00 R 0.00) [-]
+  0.08  amaryl_4mg                           (P 0.11 R 0.07) [glimepiride]
+  0.12  amrix_30mg_cap                       (P 1.00 R 0.07) [capsule]
+  0.17  levoxyl_0_025mg                      (P 0.25 R 0.12) [levoxyl]
+  0.27  gabitril_2mg                         (P 0.21 R 0.38) [gabitril]
+  0.38  levoxyl_0_075mg                      (P 0.38 R 0.38) [levoxyl]
+
+most-confused pairs (true -> predicted):
+   6x  amrix_30mg_cap                     -> allopurinol_300mg                  [CROSS-GROUP]
+   5x  amaryl_4mg                         -> gabitril_16mg                      [CROSS-GROUP]
+   4x  amrix_30mg_cap                     -> bethanechol_10mg                   [CROSS-GROUP]
+   4x  levoxyl_0_025mg                    -> levoxyl_0_075mg                    [same-group]
+   4x  levoxyl_0_075mg                    -> glimepiride_generic                [CROSS-GROUP]
+   3x  amaryl_4mg                         -> gabitril_2mg                       [CROSS-GROUP]
+   3x  bethanechol_10mg                   -> allopurinol_300mg                  [CROSS-GROUP]
+   3x  depakote_sprinkle                  -> amaryl_4mg                         [CROSS-GROUP]
+   3x  fluconazole_100mg                  -> glimepiride_generic                [CROSS-GROUP]
+   3x  glimepiride_generic                -> gabitril_2mg                       [CROSS-GROUP]
+   3x  hydralazine                        -> glyburide_metformin_b              [CROSS-GROUP]
+   2x  allopurinol_300mg                  -> gabitril_2mg                       [CROSS-GROUP]
+confused-pairs table -> confused_pairs_baseline_s2_test.csv
+
+confusion matrix -> C:\Users\ChristopherAngoe\personal projects\ML\pharm-ml-portfolio\pill-identifier\outputs\figures\confusion_baseline_s2_test.png
+=== transfer_s42 on test (184 images, 20 classes) ===
+checkpoint epoch 28, val top-1 94.7%
+
+top-1 accuracy (HEADLINE) : 92.93%   (chance 5.0%)
+top-3 accuracy (secondary; 'close enough for a lookup tool') : 98.37%   (chance 15.0%)
+  [top-5 intentionally not reported: ~17-33% by chance at this class count]
+
+--- accuracy by localisation method ---
+  pill detected  : n=  84  top-1  96.4%  top-3 100.0%
+  centre fallback: n= 100  top-1  90.0%  top-3  97.0%
+
+--- error structure ---
+  13 errors; 4 (31%) stay inside the same drug group
+  (high share = model gets the drug family right, misses the imprint/dose detail)
+
+macro F1: 0.928   -> per-class metrics appended to metrics.csv
+
+weakest classes by F1:
+  0.86  fludrocortisone                      (P 1.00 R 0.75) [-]
+  0.86  hydralazine                          (P 1.00 R 0.75) [-]
+  0.86  levoxyl_0_025mg                      (P 1.00 R 0.75) [levoxyl]
+  0.88  hyzaar_50_12_5                       (P 0.88 R 0.88) [-]
+  0.89  amrix_30mg_cap                       (P 1.00 R 0.80) [capsule]
+  0.89  gabitril_4mg                         (P 0.80 R 1.00) [gabitril]
+
+most-confused pairs (true -> predicted):
+   2x  amrix_30mg_cap                     -> flutamide_cap                      [same-group]
+   2x  hydralazine                        -> allopurinol_300mg                  [CROSS-GROUP]
+   2x  levoxyl_0_025mg                    -> levoxyl_0_075mg                    [same-group]
+   1x  amaryl_4mg                         -> bethanechol_10mg                   [CROSS-GROUP]
+   1x  amrix_30mg_cap                     -> gabitril_16mg                      [CROSS-GROUP]
+   1x  fludrocortisone                    -> gabitril_4mg                       [CROSS-GROUP]
+   1x  fludrocortisone                    -> hyzaar_50_12_5                     [CROSS-GROUP]
+   1x  gabitril_2mg                       -> bethanechol_10mg                   [CROSS-GROUP]
+   1x  glipizide_metformin                -> glyburide_metformin_b              [CROSS-GROUP]
+   1x  hyzaar_50_12_5                     -> gabitril_4mg                       [CROSS-GROUP]
+confused-pairs table -> confused_pairs_transfer_s42_test.csv
+
+confusion matrix -> C:\Users\ChristopherAngoe\personal projects\ML\pharm-ml-portfolio\pill-identifier\outputs\figures\confusion_transfer_s42_test.png
+=== transfer_s1 on test (184 images, 20 classes) ===
+checkpoint epoch 22, val top-1 95.2%
+
+top-1 accuracy (HEADLINE) : 90.76%   (chance 5.0%)
+top-3 accuracy (secondary; 'close enough for a lookup tool') : 98.37%   (chance 15.0%)
+  [top-5 intentionally not reported: ~17-33% by chance at this class count]
+
+--- accuracy by localisation method ---
+  pill detected  : n=  84  top-1  94.0%  top-3 100.0%
+  centre fallback: n= 100  top-1  88.0%  top-3  97.0%
+
+--- error structure ---
+  17 errors; 4 (24%) stay inside the same drug group
+  (high share = model gets the drug family right, misses the imprint/dose detail)
+
+macro F1: 0.895   -> per-class metrics appended to metrics.csv
+
+weakest classes by F1:
+  0.62  glipizide_metformin                  (P 0.67 R 0.57) [-]
+  0.67  levoxyl_0_025mg                      (P 1.00 R 0.50) [levoxyl]
+  0.82  gabitril_2mg                         (P 0.78 R 0.88) [gabitril]
+  0.84  gabitril_16mg                        (P 0.73 R 1.00) [gabitril]
+  0.84  glyburide_metformin_b                (P 0.73 R 1.00) [glyburide_metformin]
+  0.84  levoxyl_0_075mg                      (P 0.73 R 1.00) [levoxyl]
+
+most-confused pairs (true -> predicted):
+   3x  amrix_30mg_cap                     -> gabitril_16mg                      [CROSS-GROUP]
+   3x  glipizide_metformin                -> glyburide_metformin_b              [CROSS-GROUP]
+   3x  levoxyl_0_025mg                    -> levoxyl_0_075mg                    [same-group]
+   2x  hydralazine                        -> gabitril_2mg                       [CROSS-GROUP]
+   1x  fludrocortisone                    -> gabitril_4mg                       [CROSS-GROUP]
+   1x  fludrocortisone                    -> hyzaar_50_12_5                     [CROSS-GROUP]
+   1x  gabitril_2mg                       -> gabitril_4mg                       [same-group]
+   1x  glimepiride_generic                -> bethanechol_10mg                   [CROSS-GROUP]
+   1x  hyzaar_50_12_5                     -> glipizide_metformin                [CROSS-GROUP]
+   1x  levoxyl_0_025mg                    -> glipizide_metformin                [CROSS-GROUP]
+confused-pairs table -> confused_pairs_transfer_s1_test.csv
+
+confusion matrix -> C:\Users\ChristopherAngoe\personal projects\ML\pharm-ml-portfolio\pill-identifier\outputs\figures\confusion_transfer_s1_test.png
+=== transfer_s2 on test (184 images, 20 classes) ===
+checkpoint epoch 20, val top-1 94.3%
+
+top-1 accuracy (HEADLINE) : 88.04%   (chance 5.0%)
+top-3 accuracy (secondary; 'close enough for a lookup tool') : 100.00%   (chance 15.0%)
+  [top-5 intentionally not reported: ~17-33% by chance at this class count]
+
+--- accuracy by localisation method ---
+  pill detected  : n=  84  top-1  91.7%  top-3 100.0%
+  centre fallback: n= 100  top-1  85.0%  top-3 100.0%
+
+--- error structure ---
+  22 errors; 5 (23%) stay inside the same drug group
+  (high share = model gets the drug family right, misses the imprint/dose detail)
+
+macro F1: 0.846   -> per-class metrics appended to metrics.csv
+
+weakest classes by F1:
+  0.25  glipizide_metformin                  (P 1.00 R 0.14) [-]
+  0.25  glyburide_metformin_a                (P 1.00 R 0.14) [glyburide_metformin]
+  0.62  glyburide_metformin_b                (P 0.44 R 1.00) [glyburide_metformin]
+  0.74  hyzaar_50_12_5                       (P 0.64 R 0.88) [-]
+  0.80  gabitril_4mg                         (P 0.67 R 1.00) [gabitril]
+  0.86  fludrocortisone                      (P 1.00 R 0.75) [-]
+
+most-confused pairs (true -> predicted):
+   6x  glipizide_metformin                -> glyburide_metformin_b              [CROSS-GROUP]
+   3x  glyburide_metformin_a              -> glyburide_metformin_b              [same-group]
+   3x  glyburide_metformin_a              -> hyzaar_50_12_5                     [CROSS-GROUP]
+   1x  amaryl_4mg                         -> bethanechol_10mg                   [CROSS-GROUP]
+   1x  amrix_30mg_cap                     -> glyburide_metformin_b              [CROSS-GROUP]
+   1x  bethanechol_10mg                   -> gabitril_4mg                       [CROSS-GROUP]
+   1x  fludrocortisone                    -> gabitril_4mg                       [CROSS-GROUP]
+   1x  fludrocortisone                    -> hyzaar_50_12_5                     [CROSS-GROUP]
+   1x  gabitril_2mg                       -> gabitril_4mg                       [same-group]
+   1x  hydralazine                        -> allopurinol_300mg                  [CROSS-GROUP]
+   1x  hydralazine                        -> gabitril_2mg                       [CROSS-GROUP]
+   1x  hyzaar_50_12_5                     -> gabitril_4mg                       [CROSS-GROUP]
+confused-pairs table -> confused_pairs_transfer_s2_test.csv
+
+confusion matrix -> C:\Users\ChristopherAngoe\personal projects\ML\pharm-ml-portfolio\pill-identifier\outputs\figures\confusion_transfer_s2_test.png

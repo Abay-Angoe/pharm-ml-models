@@ -1,0 +1,5 @@
+phase,n_seeds,seeds,top1_mean,top1_std,macro_f1_mean,macro_f1_std,top3_mean,top3_std
+trivial_majority,1,n/a,8.15,0.00,nan,0.00,22.83,0.00
+trivial_stratified_random,1,n/a,5.40,0.00,nan,0.00,15.08,0.00
+baseline,3,1/2/42,46.01,2.99,46.21,3.28,74.64,1.26
+transfer,3,1/2/42,90.58,2.45,88.98,4.12,98.91,0.94

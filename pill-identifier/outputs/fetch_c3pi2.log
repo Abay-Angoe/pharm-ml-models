@@ -1,0 +1,32 @@
+index: 133774 rows
+
+selected 1212 images across 20 classes
+images per class: min 47, max 101, mean 60.6
+  >=100 real images: 1 classes (spec section 2 target; see README for why no C3PI subset clears it)
+    79  allopurinol_300mg
+    99  amaryl_4mg
+   101  amrix_30mg_cap
+    79  bethanechol_10mg
+    69  depakote_sprinkle
+    54  fluconazole_100mg
+    49  fludrocortisone
+    50  flutamide_cap
+    53  gabitril_16mg
+    52  gabitril_2mg
+    52  gabitril_4mg
+    62  glimepiride_generic
+    50  glipizide_metformin
+    56  glyburide_metformin_a
+    55  glyburide_metformin_b
+    52  hydralazine
+    52  hyzaar_50_12_5
+    49  levoxyl_0_025mg
+    52  levoxyl_0_075mg
+    47  nitrofurantoin_cap
+  100 fetched (0.6/s, ~26 min left)
+  200 fetched (0.6/s, ~18 min left)
+  300 fetched (0.6/s, ~11 min left)
+  400 fetched (0.6/s, ~4 min left)
+
+done: 453 fetched, 759 already present, 0 failed -> C:\Users\ChristopherAngoe\personal projects\ML\pharm-ml-portfolio\pill-identifier\data\raw\c3pi
+EXIT=0

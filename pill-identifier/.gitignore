@@ -1,0 +1,26 @@
+.venv/
+__pycache__/
+*.pyc
+
+# Secrets — never commit
+.env
+kaggle.json
+
+# Repo convention: never commit .venv/, data/, outputs/checkpoints/, *.pth.
+# The whole image tree is re-fetchable via src/fetch_c3pi.py + src/preprocess.py.
+data/
+
+outputs/checkpoints/
+*.pt
+*.pth
+
+# Figures ARE tracked: checkpoints are not committed, so they are not in fact
+# regenerable from a fresh clone, and they are the visible evidence for the
+# write-up. 15.6 MB total, largest file 3.15 MB.
+
+# Tracked on purpose (small, needed to reproduce/verify results):
+#   outputs/metrics.csv, outputs/summary_seeds.csv, outputs/history_*.csv,
+#   outputs/gradcam_analysis_*.json, outputs/ood_rejection.json,
+#   outputs/preprocess_stats.json
+# The class subset is defined in src/classes.py, so nothing under data/ needs tracking;
+# data/ (raw, processed, and the OOD probe set) is all re-fetchable.

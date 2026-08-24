@@ -1,0 +1,69 @@
+# ---------------------------------------------------------------------------
+# Secrets — never commit
+# ---------------------------------------------------------------------------
+.env
+.env.*
+!.env.example
+kaggle.json
+*.pem
+*.key
+*credentials*
+*secret*
+
+# ---------------------------------------------------------------------------
+# Local tool / editor state
+# ---------------------------------------------------------------------------
+.claude/settings.local.json
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# ---------------------------------------------------------------------------
+# Python environments and bytecode
+# ---------------------------------------------------------------------------
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.ipynb_checkpoints/
+.pytest_cache/
+
+# ---------------------------------------------------------------------------
+# Node
+# ---------------------------------------------------------------------------
+node_modules/
+
+# ---------------------------------------------------------------------------
+# Datasets — multi-GB and fully re-fetchable
+#   pill-identifier: src/fetch_c3pi.py + src/preprocess.py rebuild the tree;
+#   the class subset is pinned in src/classes.py.
+# ---------------------------------------------------------------------------
+data/
+
+# ---------------------------------------------------------------------------
+# Model weights — too large for git, retrainable from the pinned seeds
+# ---------------------------------------------------------------------------
+**/outputs/checkpoints/
+*.pt
+*.pth
+*.onnx
+*.h5
+*.ckpt
+
+# ---------------------------------------------------------------------------
+# Superseded OGYEIv2 run: keep the small text record + README.txt as
+# provenance, drop its binaries. See its README.txt — results are retracted.
+# ---------------------------------------------------------------------------
+**/outputs/_ogyeiv2_archive/checkpoints/
+**/outputs/_ogyeiv2_archive/figures/
+
+# ---------------------------------------------------------------------------
+# Tracked on purpose (small, and the visible evidence for the write-up):
+#   outputs/figures/*.png          — confusion matrices, Grad-CAM, summary
+#   outputs/metrics.csv, summary_seeds.csv, history_*.csv
+#   outputs/gradcam_analysis_*.json, ood_rejection.json, preprocess_stats.json
+#   outputs/*.log                  — run logs, no paths or PII
+# ---------------------------------------------------------------------------

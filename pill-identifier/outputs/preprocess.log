@@ -1,0 +1,31 @@
+1212 raw images across 20 classes
+per-class: {'allopurinol_300mg': 79, 'amaryl_4mg': 99, 'amrix_30mg_cap': 101, 'bethanechol_10mg': 79, 'depakote_sprinkle': 69, 'fluconazole_100mg': 54, 'fludrocortisone': 49, 'flutamide_cap': 50, 'gabitril_16mg': 53, 'gabitril_2mg': 52, 'gabitril_4mg': 52, 'glimepiride_generic': 62, 'glipizide_metformin': 50, 'glyburide_metformin_a': 56, 'glyburide_metformin_b': 55, 'hydralazine': 52, 'hyzaar_50_12_5': 52, 'levoxyl_0_025mg': 49, 'levoxyl_0_075mg': 52, 'nitrofurantoin_cap': 47}
+
+pass 1/3: localise + crop
+  300/1212 ...
+  600/1212 ...
+  900/1212 ...
+  1200/1212 ...
+
+pass 2/3: group near-duplicate captures (cosine threshold 0.08)
+  1212 images -> 675 capture groups (median size 1.0, largest 51)
+  groups per class: min 9, max 68
+  171/675 groups contain >1 image (708 images are part of a duplicate set)
+
+pass 3/3: grouped stratified split + write
+
+wrote 1212 crops -> C:\Users\ChristopherAngoe\personal projects\ML\pharm-ml-portfolio\pill-identifier\data\processed
+localisation: detected 686 (56.6%), center_fallback 526 (43.4%)
+
+split sizes (target 70/15/15):
+  train    819 (67.6%)  per-class 30-70, 20 classes
+  valid    209 (17.2%)  per-class 7-18, 20 classes
+  test     184 (15.2%)  per-class 7-15, 20 classes
+class/split cells with zero images: 0 (all classes in all splits)
+
+detected subset, pill width at 224px input:
+  after crop   median 139.9px
+  naive resize median  34.7px
+  -> 4.0x more pixels on the pill
+stats -> C:\Users\ChristopherAngoe\personal projects\ML\pharm-ml-portfolio\pill-identifier\outputs\preprocess_stats.json
+EXIT=0

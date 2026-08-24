@@ -1,0 +1,117 @@
+computing Grad-CAM for 113 images (4/class over 30 classes)...
+  20/113 ...
+  40/113 ...
+  60/113 ...
+  80/113 ...
+  100/113 ...
+
+=== Grad-CAM attention analysis: baseline_s1 (test) ===
+n = 113 images
+
+                    subset    n   on_pill  interior     rim  imprint_corr
+-------------------------------------------------------------------------
+                       ALL  113     0.732     0.731   0.269        -0.023
+       side-lit (engraved)   57     0.739     0.744   0.256        -0.088
+      diffuse (washed out)   56     0.725     0.718   0.282         0.044
+       correct predictions   74     0.749     0.741   0.259         0.005
+     incorrect predictions   39     0.701     0.711   0.289        -0.076
+
+--- verdict ---
+  CAM mass on the pill        : 73.2%
+    -> the model is looking at the pill, not the background
+  interior vs rim             : 73.1% interior
+    -> substantial attention on the pill face where imprints are
+  edge-energy correlation     : side-lit -0.088 vs diffuse +0.044
+    -> NO imprint evidence: attention is not tracking engraved detail; likely colour/shape shortcut
+
+analysis -> C:\Users\ChristopherAngoe\personal projects\ML\pharm-ml-portfolio\pill-identifier\outputs\gradcam_analysis_baseline_s1.json
+figure   -> C:\Users\ChristopherAngoe\personal projects\ML\pharm-ml-portfolio\pill-identifier\outputs\figures\gradcam_baseline_s1_test.png
+done baseline_s1
+computing Grad-CAM for 113 images (4/class over 30 classes)...
+  20/113 ...
+  40/113 ...
+  60/113 ...
+  80/113 ...
+  100/113 ...
+
+=== Grad-CAM attention analysis: baseline_s2 (test) ===
+n = 113 images
+
+                    subset    n   on_pill  interior     rim  imprint_corr
+-------------------------------------------------------------------------
+                       ALL  113     0.751     0.749   0.251        -0.040
+       side-lit (engraved)   57     0.783     0.780   0.220        -0.113
+      diffuse (washed out)   56     0.718     0.717   0.283         0.035
+       correct predictions   68     0.752     0.738   0.262         0.006
+     incorrect predictions   45     0.749     0.765   0.235        -0.112
+
+--- verdict ---
+  CAM mass on the pill        : 75.1%
+    -> the model is looking at the pill, not the background
+  interior vs rim             : 74.9% interior
+    -> substantial attention on the pill face where imprints are
+  edge-energy correlation     : side-lit -0.113 vs diffuse +0.035
+    -> NO imprint evidence: attention is not tracking engraved detail; likely colour/shape shortcut
+
+analysis -> C:\Users\ChristopherAngoe\personal projects\ML\pharm-ml-portfolio\pill-identifier\outputs\gradcam_analysis_baseline_s2.json
+figure   -> C:\Users\ChristopherAngoe\personal projects\ML\pharm-ml-portfolio\pill-identifier\outputs\figures\gradcam_baseline_s2_test.png
+done baseline_s2
+computing Grad-CAM for 113 images (4/class over 30 classes)...
+  20/113 ...
+  40/113 ...
+  60/113 ...
+  80/113 ...
+  100/113 ...
+
+=== Grad-CAM attention analysis: transfer_s1 (test) ===
+n = 112 images
+
+                    subset    n   on_pill  interior     rim  imprint_corr
+-------------------------------------------------------------------------
+                       ALL  112     0.711     0.815   0.185         0.055
+       side-lit (engraved)   57     0.717     0.818   0.182         0.060
+      diffuse (washed out)   55     0.704     0.812   0.188         0.050
+       correct predictions   94     0.697     0.810   0.190         0.052
+     incorrect predictions   18     0.783     0.840   0.160         0.067
+
+--- verdict ---
+  CAM mass on the pill        : 71.1%
+    -> the model is looking at the pill, not the background
+  interior vs rim             : 81.5% interior
+    -> substantial attention on the pill face where imprints are
+  edge-energy correlation     : side-lit +0.060 vs diffuse +0.050
+    -> partially imprint-driven, but no clear lighting effect
+
+analysis -> C:\Users\ChristopherAngoe\personal projects\ML\pharm-ml-portfolio\pill-identifier\outputs\gradcam_analysis_transfer_s1.json
+figure   -> C:\Users\ChristopherAngoe\personal projects\ML\pharm-ml-portfolio\pill-identifier\outputs\figures\gradcam_transfer_s1_test.png
+done transfer_s1
+computing Grad-CAM for 113 images (4/class over 30 classes)...
+  20/113 ...
+  40/113 ...
+  60/113 ...
+  80/113 ...
+  100/113 ...
+
+=== Grad-CAM attention analysis: transfer_s2 (test) ===
+n = 111 images
+
+                    subset    n   on_pill  interior     rim  imprint_corr
+-------------------------------------------------------------------------
+                       ALL  111     0.690     0.807   0.193         0.061
+       side-lit (engraved)   56     0.694     0.810   0.190         0.062
+      diffuse (washed out)   55     0.687     0.805   0.195         0.060
+       correct predictions   86     0.680     0.804   0.196         0.082
+     incorrect predictions   25     0.727     0.818   0.182        -0.011
+
+--- verdict ---
+  CAM mass on the pill        : 69.0%
+    -> the model is looking at the pill, not the background
+  interior vs rim             : 80.7% interior
+    -> substantial attention on the pill face where imprints are
+  edge-energy correlation     : side-lit +0.062 vs diffuse +0.060
+    -> partially imprint-driven, but no clear lighting effect
+
+analysis -> C:\Users\ChristopherAngoe\personal projects\ML\pharm-ml-portfolio\pill-identifier\outputs\gradcam_analysis_transfer_s2.json
+figure   -> C:\Users\ChristopherAngoe\personal projects\ML\pharm-ml-portfolio\pill-identifier\outputs\figures\gradcam_transfer_s2_test.png
+done transfer_s2
+GRADCAM SEEDS DONE

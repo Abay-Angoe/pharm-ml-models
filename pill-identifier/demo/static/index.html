@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pill Identifier — 20-class demo</title>
+<style>
+  :root { --fg:#1a1a1a; --dim:#666; --line:#e2e2e2; --accent:#1864ab;
+          --warn:#b54708; --bad:#d9480f; --ok:#2b8a3e; --bg:#fff; --card:#fafafa; }
+  @media (prefers-color-scheme: dark) {
+    :root { --fg:#e8e8e8; --dim:#9a9a9a; --line:#333; --accent:#74a9e0;
+            --warn:#f0a868; --bad:#ff8a5c; --ok:#69db7c; --bg:#141414; --card:#1e1e1e; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; padding:2rem 1rem 4rem; background:var(--bg); color:var(--fg);
+         font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; }
+  main { max-width:860px; margin:0 auto; }
+  h1 { font-size:1.5rem; margin:0 0 .25rem; }
+  .sub { color:var(--dim); margin:0 0 1.5rem; font-size:.9rem; }
+  .banner { border:1px solid var(--warn); border-left:4px solid var(--warn);
+            background:var(--card); padding:.85rem 1rem; border-radius:6px;
+            font-size:.88rem; margin-bottom:1.5rem; }
+  .banner b { color:var(--warn); }
+  .drop { border:2px dashed var(--line); border-radius:10px; padding:2.25rem 1rem;
+          text-align:center; cursor:pointer; background:var(--card);
+          transition:border-color .15s; }
+  .drop:hover, .drop.over { border-color:var(--accent); }
+  .drop input { display:none; }
+  .muted { color:var(--dim); font-size:.85rem; }
+  #result { margin-top:1.75rem; display:none; }
+  .row { display:flex; gap:1.5rem; flex-wrap:wrap; }
+  .cropwrap { flex:0 0 224px; }
+  .cropwrap img { width:224px; height:224px; border-radius:8px;
+                  border:1px solid var(--line); display:block; }
+  .cropcap { font-size:.78rem; color:var(--dim); margin-top:.4rem; }
+  .cands { flex:1 1 320px; min-width:280px; }
+  .cand { margin-bottom:.7rem; }
+  .cand .top { display:flex; justify-content:space-between; gap:1rem;
+               font-size:.9rem; margin-bottom:.2rem; }
+  .cand .name { font-weight:600; }
+  .bar { height:8px; background:var(--line); border-radius:4px; overflow:hidden; }
+  .bar span { display:block; height:100%; background:var(--accent); }
+  .cand.dim .name, .cand.dim .pct { color:var(--dim); font-weight:500; }
+  .cand.dim .bar span { background:var(--dim); }
+  .verdict { padding:.85rem 1rem; border-radius:6px; margin:1.25rem 0;
+             font-size:.92rem; border:1px solid var(--line); background:var(--card); }
+  .verdict.reject { border-color:var(--bad); border-left:4px solid var(--bad); }
+  .verdict.ok { border-color:var(--ok); border-left:4px solid var(--ok); }
+  .flag { font-size:.8rem; color:var(--warn); margin-top:.5rem; }
+  details { margin-top:2rem; border-top:1px solid var(--line); padding-top:1rem; }
+  summary { cursor:pointer; font-weight:600; font-size:.92rem; }
+  table { border-collapse:collapse; width:100%; font-size:.85rem; margin-top:.75rem; }
+  th,td { text-align:left; padding:.35rem .5rem; border-bottom:1px solid var(--line); }
+  th { color:var(--dim); font-weight:600; }
+  .grp { color:var(--dim); font-size:.8rem; }
+  .spin { display:none; margin-top:1rem; color:var(--dim); font-size:.9rem; }
+  code { background:var(--card); padding:.1rem .3rem; border-radius:3px; font-size:.85em; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Pill Identifier</h1>
+  <p class="sub">20-product demo · ResNet18 transfer model · NIH C3PI photographs</p>
+
+  <div class="banner" id="banner">Loading model info…</div>
+
+  <label class="drop" id="drop">
+    <input type="file" id="file" accept="image/*">
+    <div><b>Choose a photo</b> or drop one here</div>
+    <div class="muted" style="margin-top:.4rem">
+      One pill, roughly centred, plain background works best
+    </div>
+  </label>
+  <div class="spin" id="spin">Analysing…</div>
+
+  <div id="result">
+    <div class="row">
+      <div class="cropwrap">
+        <img id="crop" alt="the region that was classified">
+        <div class="cropcap" id="cropcap"></div>
+      </div>
+      <div class="cands" id="cands"></div>
+    </div>
+    <div class="verdict" id="verdict"></div>
+  </div>
+
+  <details>
+    <summary>What this model can and cannot identify</summary>
+    <div id="limits"></div>
+    <table id="classlist"><thead><tr><th>Product it knows</th><th>Look-alike group</th></tr></thead><tbody></tbody></table>
+  </details>
+</main>
+
+<script>
+const $ = id => document.getElementById(id);
+let INFO = null;
+
+fetch('/api/info').then(r => r.json()).then(d => {
+  INFO = d;
+  const rj = d.rejection, tm = d.test_metrics || {};
+  $('banner').innerHTML =
+    `<b>Read this first.</b> This recognises <b>${d.n_classes} specific products</b> — about
+     0.8% of the pills in the source archive. It is a closed set: shown anything else it
+     will still pick one of its ${d.n_classes}. Measured on ${rj.n_ood_images} photos of
+     products it was never trained on, it correctly declined
+     <b>${(rj.ood_rejected*100).toFixed(0)}%</b> and wrongly named
+     <b>${(rj.ood_still_named*100).toFixed(0)}%</b>. Held-out accuracy
+     ${tm.top1_mean ? tm.top1_mean.toFixed(0)+'% ±'+tm.top1_std.toFixed(0) : 'n/a'} top-1.
+     <b>Not for clinical use.</b>`;
+
+  $('limits').innerHTML =
+    `<p style="font-size:.88rem">It answers only when confident (threshold
+      <code>${rj.threshold.toFixed(2)}</code>, chosen on validation as the lowest value
+      reaching 99% precision). That means it declines about
+      ${(100-rj.coverage*100).toFixed(0)}% of in-set photos rather than guess.
+      It also <b>does not read imprints</b> — so it cannot reliably separate the same
+      product at different strengths. Those cases are grouped below.</p>`;
+
+  const tb = $('classlist').querySelector('tbody');
+  d.classes.forEach(c => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${c.label}</td><td class="grp">${c.group || '—'}</td>`;
+    tb.appendChild(tr);
+  });
+}).catch(() => { $('banner').textContent = 'Could not reach the backend.'; });
+
+const drop = $('drop');
+['dragover','dragenter'].forEach(e => drop.addEventListener(e, ev => {
+  ev.preventDefault(); drop.classList.add('over');
+}));
+['dragleave','drop'].forEach(e => drop.addEventListener(e, () => drop.classList.remove('over')));
+drop.addEventListener('drop', ev => {
+  ev.preventDefault();
+  if (ev.dataTransfer.files[0]) send(ev.dataTransfer.files[0]);
+});
+$('file').addEventListener('change', ev => {
+  if (ev.target.files[0]) send(ev.target.files[0]);
+});
+
+async function send(f) {
+  $('spin').style.display = 'block';
+  $('result').style.display = 'none';
+  const fd = new FormData();
+  fd.append('file', f);
+  try {
+    const r = await fetch('/api/identify', { method:'POST', body:fd });
+    if (!r.ok) {
+      const e = await r.json().catch(() => ({detail:'request failed'}));
+      throw new Error(e.detail || 'request failed');
+    }
+    render(await r.json());
+  } catch (err) {
+    $('spin').style.display = 'none';
+    $('result').style.display = 'block';
+    $('cands').innerHTML = '';
+    $('crop').removeAttribute('src');
+    $('cropcap').textContent = '';
+    $('verdict').className = 'verdict reject';
+    $('verdict').textContent = 'Error: ' + err.message;
+  }
+}
+
+function render(d) {
+  $('spin').style.display = 'none';
+  $('crop').src = 'data:image/png;base64,' + d.crop_png_b64;
+  $('cropcap').innerHTML =
+    `<b>This is what was classified.</b><br>${d.localisation.note}`;
+
+  $('cands').innerHTML = d.top3.map((t, i) => `
+    <div class="cand ${i || d.rejected ? 'dim' : ''}">
+      <div class="top">
+        <span class="name">${t.label}${t.group ? ` <span class="grp">(${t.group})</span>` : ''}</span>
+        <span class="pct">${(t.confidence*100).toFixed(1)}%</span>
+      </div>
+      <div class="bar"><span style="width:${Math.max(t.confidence*100, 1)}%"></span></div>
+    </div>`).join('');
+
+  const v = $('verdict');
+  v.className = 'verdict ' + (d.rejected ? 'reject' : 'ok');
+  v.innerHTML = d.prose +
+    (d.localisation.method === 'center_fallback'
+      ? `<div class="flag">⚠ No pill was detected, so a centre crop was used.
+         Accuracy on fallback crops measures ~6 points lower.</div>` : '');
+  $('result').style.display = 'block';
+}
+</script>
+</body>
+</html>

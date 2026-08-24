@@ -1,0 +1,161 @@
+sampling 76 images over 20 classes (33 incorrect, 43 correct)
+  20/76 ...
+  40/76 ...
+  60/76 ...
+note: mask estimation failed on 5 crops (excluded)
+
+=== Grad-CAM attention analysis: baseline_s42 (test) ===
+n = 71 images (mask estimated; C3PI has no ground truth)
+
+                    subset    n   on_pill  interior     rim  imprint_corr
+-------------------------------------------------------------------------
+                       ALL   71     0.541     0.567   0.433        -0.047
+       correct predictions   42     0.499     0.554   0.446        -0.093
+     incorrect predictions   29     0.602     0.585   0.415         0.020
+             pill detected   38     0.571     0.601   0.399        -0.052
+           centre fallback   33     0.507     0.526   0.474        -0.042
+
+--- verdict ---
+  CAM mass on the pill    : 54.1%
+    -> the model is looking at the pill, not the background
+  interior vs rim         : 56.7% interior
+    -> substantial attention on the pill face, where imprints are
+  edge-energy correlation : -0.047 (correct -0.093 vs incorrect +0.020)
+    -> NO imprint evidence: attention does not track engraved detail; likely a colour/shape shortcut
+
+analysis -> C:\Users\ChristopherAngoe\personal projects\ML\pharm-ml-portfolio\pill-identifier\outputs\gradcam_analysis_baseline_s42.json
+figure   -> C:\Users\ChristopherAngoe\personal projects\ML\pharm-ml-portfolio\pill-identifier\outputs\figures\gradcam_baseline_s42_test.png
+sampling 73 images over 20 classes (36 incorrect, 37 correct)
+  20/73 ...
+  60/73 ...
+note: mask estimation failed on 5 crops (excluded)
+
+=== Grad-CAM attention analysis: baseline_s1 (test) ===
+n = 67 images (mask estimated; C3PI has no ground truth)
+
+                    subset    n   on_pill  interior     rim  imprint_corr
+-------------------------------------------------------------------------
+                       ALL   67     0.527     0.534   0.466        -0.068
+       correct predictions   35     0.504     0.549   0.451        -0.064
+     incorrect predictions   32     0.552     0.516   0.484        -0.073
+             pill detected   36     0.560     0.601   0.399        -0.040
+           centre fallback   31     0.488     0.455   0.545        -0.102
+
+--- verdict ---
+  CAM mass on the pill    : 52.7%
+    -> the model is looking at the pill, not the background
+  interior vs rim         : 53.4% interior
+    -> substantial attention on the pill face, where imprints are
+  edge-energy correlation : -0.068 (correct -0.064 vs incorrect -0.073)
+    -> NO imprint evidence: attention does not track engraved detail; likely a colour/shape shortcut
+
+analysis -> C:\Users\ChristopherAngoe\personal projects\ML\pharm-ml-portfolio\pill-identifier\outputs\gradcam_analysis_baseline_s1.json
+figure   -> C:\Users\ChristopherAngoe\personal projects\ML\pharm-ml-portfolio\pill-identifier\outputs\figures\gradcam_baseline_s1_test.png
+sampling 75 images over 20 classes (30 incorrect, 45 correct)
+  40/75 ...
+note: mask estimation failed on 6 crops (excluded)
+
+=== Grad-CAM attention analysis: baseline_s2 (test) ===
+n = 68 images (mask estimated; C3PI has no ground truth)
+
+                    subset    n   on_pill  interior     rim  imprint_corr
+-------------------------------------------------------------------------
+                       ALL   68     0.536     0.557   0.443        -0.052
+       correct predictions   43     0.476     0.565   0.435        -0.080
+     incorrect predictions   25     0.639     0.544   0.456        -0.002
+             pill detected   39     0.548     0.592   0.408        -0.035
+           centre fallback   29     0.519     0.510   0.490        -0.075
+
+--- verdict ---
+  CAM mass on the pill    : 53.6%
+    -> the model is looking at the pill, not the background
+  interior vs rim         : 55.7% interior
+    -> substantial attention on the pill face, where imprints are
+  edge-energy correlation : -0.052 (correct -0.080 vs incorrect -0.002)
+    -> NO imprint evidence: attention does not track engraved detail; likely a colour/shape shortcut
+
+analysis -> C:\Users\ChristopherAngoe\personal projects\ML\pharm-ml-portfolio\pill-identifier\outputs\gradcam_analysis_baseline_s2.json
+figure   -> C:\Users\ChristopherAngoe\personal projects\ML\pharm-ml-portfolio\pill-identifier\outputs\figures\gradcam_baseline_s2_test.png
+sampling 80 images over 20 classes (12 incorrect, 68 correct)
+  20/80 ...
+  40/80 ...
+  60/80 ...
+  80/80 ...
+note: mask estimation failed on 7 crops (excluded)
+
+=== Grad-CAM attention analysis: transfer_s42 (test) ===
+n = 73 images (mask estimated; C3PI has no ground truth)
+
+                    subset    n   on_pill  interior     rim  imprint_corr
+-------------------------------------------------------------------------
+                       ALL   73     0.408     0.526   0.474         0.007
+       correct predictions   61     0.400     0.533   0.467        -0.006
+     incorrect predictions   12     0.452     0.493   0.507         0.073
+             pill detected   38     0.342     0.519   0.481         0.048
+           centre fallback   35     0.480     0.534   0.466        -0.038
+
+--- verdict ---
+  CAM mass on the pill    : 40.8%
+    -> WEAK: much attention is off-pill (background shortcut)
+  interior vs rim         : 52.6% interior
+    -> substantial attention on the pill face, where imprints are
+  edge-energy correlation : +0.007 (correct -0.006 vs incorrect +0.073)
+    -> weakly imprint-driven; mostly colour/shape
+
+analysis -> C:\Users\ChristopherAngoe\personal projects\ML\pharm-ml-portfolio\pill-identifier\outputs\gradcam_analysis_transfer_s42.json
+figure   -> C:\Users\ChristopherAngoe\personal projects\ML\pharm-ml-portfolio\pill-identifier\outputs\figures\gradcam_transfer_s42_test.png
+sampling 80 images over 20 classes (13 incorrect, 67 correct)
+  20/80 ...
+  40/80 ...
+  60/80 ...
+  80/80 ...
+note: mask estimation failed on 7 crops (excluded)
+
+=== Grad-CAM attention analysis: transfer_s1 (test) ===
+n = 73 images (mask estimated; C3PI has no ground truth)
+
+                    subset    n   on_pill  interior     rim  imprint_corr
+-------------------------------------------------------------------------
+                       ALL   73     0.413     0.529   0.471         0.003
+       correct predictions   61     0.405     0.533   0.467         0.001
+     incorrect predictions   12     0.450     0.505   0.495         0.011
+             pill detected   38     0.348     0.519   0.481         0.048
+           centre fallback   35     0.483     0.540   0.460        -0.046
+
+--- verdict ---
+  CAM mass on the pill    : 41.3%
+    -> WEAK: much attention is off-pill (background shortcut)
+  interior vs rim         : 52.9% interior
+    -> substantial attention on the pill face, where imprints are
+  edge-energy correlation : +0.003 (correct +0.001 vs incorrect +0.011)
+    -> weakly imprint-driven; mostly colour/shape
+
+analysis -> C:\Users\ChristopherAngoe\personal projects\ML\pharm-ml-portfolio\pill-identifier\outputs\gradcam_analysis_transfer_s1.json
+figure   -> C:\Users\ChristopherAngoe\personal projects\ML\pharm-ml-portfolio\pill-identifier\outputs\figures\gradcam_transfer_s1_test.png
+sampling 78 images over 20 classes (14 incorrect, 64 correct)
+  20/78 ...
+  40/78 ...
+note: mask estimation failed on 7 crops (excluded)
+
+=== Grad-CAM attention analysis: transfer_s2 (test) ===
+n = 71 images (mask estimated; C3PI has no ground truth)
+
+                    subset    n   on_pill  interior     rim  imprint_corr
+-------------------------------------------------------------------------
+                       ALL   71     0.406     0.528   0.472         0.001
+       correct predictions   57     0.394     0.520   0.480        -0.000
+     incorrect predictions   14     0.451     0.557   0.443         0.005
+             pill detected   36     0.339     0.515   0.485         0.035
+           centre fallback   35     0.474     0.540   0.460        -0.034
+
+--- verdict ---
+  CAM mass on the pill    : 40.6%
+    -> WEAK: much attention is off-pill (background shortcut)
+  interior vs rim         : 52.8% interior
+    -> substantial attention on the pill face, where imprints are
+  edge-energy correlation : +0.001 (correct -0.000 vs incorrect +0.005)
+    -> weakly imprint-driven; mostly colour/shape
+
+analysis -> C:\Users\ChristopherAngoe\personal projects\ML\pharm-ml-portfolio\pill-identifier\outputs\gradcam_analysis_transfer_s2.json
+figure   -> C:\Users\ChristopherAngoe\personal projects\ML\pharm-ml-portfolio\pill-identifier\outputs\figures\gradcam_transfer_s2_test.png
+GRADCAM DONE

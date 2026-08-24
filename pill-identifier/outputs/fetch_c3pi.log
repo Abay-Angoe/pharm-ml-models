@@ -1,0 +1,63 @@
+index: 133774 rows
+
+selected 1285 images across 20 classes
+images per class: min 52, max 101, mean 64.2
+  >=100 real images: 1 classes (spec section 2 target; see README for why no C3PI subset clears it)
+    79  allopurinol_300mg
+    99  amaryl_4mg
+    52  amerge
+   101  amrix_30mg_cap
+    56  avandia_8mg
+    60  avelox_400mg
+    56  avodart_0_5mg_softgel
+    60  betapace
+    79  bethanechol_10mg
+    60  combivir
+    69  depakote_sprinkle_125mg
+    62  dyazide_cap
+    54  fluconazole_100mg
+    53  gabitril_16mg
+    62  glimepiride_1mg
+    56  glyburide_metformin_5_500
+    55  glyburide_metformin_alt
+    52  hyzaar_50_12_5
+    60  lanoxin_0_125mg
+    60  lanoxin_0_25mg
+  100 fetched (0.3/s, ~72 min left)
+  200 fetched (0.3/s, ~68 min left)
+  300 fetched (0.2/s, ~64 min left)
+  400 fetched (0.2/s, ~55 min left)
+  500 fetched (0.2/s, ~49 min left)
+  600 fetched (0.2/s, ~38 min left)
+index: 133774 rows
+
+selected 1285 images across 20 classes
+images per class: min 52, max 101, mean 64.2
+  >=100 real images: 1 classes (spec section 2 target; see README for why no C3PI subset clears it)
+    79  allopurinol_300mg
+    99  amaryl_4mg
+    52  amerge
+   101  amrix_30mg_cap
+    56  avandia_8mg
+    60  avelox_400mg
+    56  avodart_0_5mg_softgel
+    60  betapace
+    79  bethanechol_10mg
+    60  combivir
+    69  depakote_sprinkle_125mg
+    62  dyazide_cap
+    54  fluconazole_100mg
+    53  gabitril_16mg
+    62  glimepiride_1mg
+    56  glyburide_metformin_5_500
+    55  glyburide_metformin_alt
+    52  hyzaar_50_12_5
+    60  lanoxin_0_125mg
+    60  lanoxin_0_25mg
+  100 fetched (0.7/s, ~10 min left)
+  200 fetched (0.6/s, ~7 min left)
+  300 fetched (0.7/s, ~4 min left)
+  400 fetched (0.7/s, ~1 min left)
+
+done: 420 fetched, 865 already present, 0 failed -> C:\Users\ChristopherAngoe\personal projects\ML\pharm-ml-portfolio\pill-identifier\data\raw\c3pi
+EXIT=0
