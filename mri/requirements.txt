@@ -1,0 +1,16 @@
+# Brain Tumor MRI Classifier -- environment (spec section 3)
+# Requires python >= 3.10  (this machine: 3.13.7)
+
+torch>=2.6            # 2.6+ is the first line with full cp313 wheels
+torchvision>=0.21
+scikit-learn>=1.4
+matplotlib>=3.8
+seaborn>=0.13
+pandas>=2.2
+tqdm>=4.66
+grad-cam>=1.5         # pytorch-grad-cam, for Phase 3 interpretability
+pillow>=10.0          # image IO (implicit torchvision dep, pinned explicitly)
+
+# Listed in the spec for dataset download. Not exercised in this build: the
+# dataset was supplied locally in ./archive, so nothing is fetched from Kaggle.
+kaggle>=1.6
